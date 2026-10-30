@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://www.egeserprefabrik.com.tr/sitemap.xml
