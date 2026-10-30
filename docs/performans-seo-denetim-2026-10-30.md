@@ -147,7 +147,7 @@ HTML sayfaları `Cache-Control: no-store` ile geliyor (PHP oturumunun varsayıla
 Bing, ChatGPT Search ve Copilot'un da veri kaynağı. Bing Webmaster Tools → URL İnceleme ile doğrulayın; 406 alırsanız hosting firmasından ModSecurity/Imunify "bad bot" kuralının doğrulanmış Bing IP'leri için kapatılmasını isteyin.
 
 **🔴 S2 — Yüklenmemiş site düzeltmeleri** (bkz. Bölüm 2)
-Sayaçların Google'a `0` görünmesi ve taslak metin, ilk izlenimi ve güveni doğrudan etkiliyor.
+Not: Normal tarayıcıda sayaçlar JS ile doğru değerlere dönüyor ve taslak metin görünmüyor; sorun ham HTML'de (JS'siz ortamlar, bazı botlar, önizleme araçları). Etkisi sınırlı ama düzeltmesi hazır ve risksiz.
 
 **🟠 S3 — Blog yazılarına iç link çok zayıf**
 7 blog yazısı sitede yalnızca **1 yerden** (`/blog` listesi) link alıyor: kurumsal yapı seçimi rehberi, montaj süreci, duvarların yanmazlık sınıfı, **prefabrik ev fiyatları 2026**, prefabrik/çelik ev farkları, deprem yönetmeliği, kullanım amaçları.
@@ -167,7 +167,7 @@ Sayaçların Google'a `0` görünmesi ve taslak metin, ilk izlenimi ve güveni d
 Bu bir iş kararı.
 
 **🟡 S5 — FAQPage şeması 71 sayfada**
-Google, Ağustos 2023'ten beri SSS zengin sonuçlarını yalnızca resmi sağlık ve devlet sitelerinde gösteriyor. Şemanın zararı yok, ama arama sonuçlarında SSS açılır listesi beklenmemeli. Kaldırmaya gerek yok.
+Google, SSS zengin sonuçlarını 7 Mayıs 2026'da tüm siteler için tamamen kaldırdı (2023'ten beri yalnızca sağlık/devlet sitelerinde gösteriliyordu). Şema geçerli kalıyor ve yapay zekâ aramaları tarafından okunabiliyor; kaldırmaya gerek yok, ama Google'da SSS açılır listesi artık beklenmemeli ve bu şemaya ek emek harcanmamalı.
 
 **🟡 S6 — Küçük meta düzeltmeleri** (Admin panelinden)
 - `/prefabrik-ev-modelleri` title 61 karakter → 1 karakter kısaltın.
