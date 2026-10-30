@@ -34,29 +34,36 @@
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
-<script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript" defer></script>
-<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript" defer></script>
-<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
+<?php
+// EGESER - Yerel CSS/JS dosyalarina degisiklik tarihi eklenir; dosya guncellenince tarayici eskisini kullanmaz.
+$egv = function ($path) { $file = dirname(DIR_APPLICATION) . '/' . ltrim(preg_replace('/\?.*$/', '', $path), '/'); return (strpos($path, '?') === false && strpos($path, '//') === false && is_file($file)) ? $path . '?v=' . filemtime($file) : $path; };
+?>
+<script src="<?php echo $egv('catalog/view/javascript/jquery/jquery-2.1.1.min.js'); ?>" type="text/javascript" defer></script>
+<link href="<?php echo $egv('catalog/view/javascript/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet" media="screen">
+<script src="<?php echo $egv('catalog/view/javascript/bootstrap/js/bootstrap.min.js'); ?>" type="text/javascript" defer></script>
+<link href="<?php echo $egv('catalog/view/javascript/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css">
+<link href="<?php echo $egv('catalog/view/theme/default/stylesheet/stylesheet.css'); ?>" rel="stylesheet">
 
 <?php foreach ($styles as $style) { ?>
-<link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
+<link href="<?php echo $egv($style['href']); ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
 
-<link href="catalog/view/theme/egeser/stylesheet/theme.css" rel="stylesheet" />
-<link href="catalog/view/theme/egeser/stylesheet/egeser-image-fit-v1.css" rel="stylesheet" />
-<link href="catalog/view/theme/egeser/stylesheet/egeser-consent.css" rel="stylesheet" />
+<link href="<?php echo $egv('catalog/view/theme/egeser/stylesheet/theme.css'); ?>" rel="stylesheet" />
+<link href="<?php echo $egv('catalog/view/theme/egeser/stylesheet/egeser-image-fit-v1.css'); ?>" rel="stylesheet" />
+<link href="<?php echo $egv('catalog/view/theme/egeser/stylesheet/egeser-consent.css'); ?>" rel="stylesheet" />
 <link href="catalog/view/theme/egeser/stylesheet/egeser-ui-audit-v4.css?v=<?php echo is_file(DIR_TEMPLATE . 'egeser/stylesheet/egeser-ui-audit-v4.css') ? filemtime(DIR_TEMPLATE . 'egeser/stylesheet/egeser-ui-audit-v4.css') : time(); ?>" rel="stylesheet" />
+<link href="<?php echo $egv('catalog/view/theme/egeser/stylesheet/egeser-a11y-v1.css'); ?>" rel="stylesheet" />
 
 <?php foreach ($scripts as $script) { ?>
-<script src="<?php echo $script; ?>" defer></script>
+<script src="<?php echo $egv($script); ?>" defer></script>
 <?php } ?>
-<script src="catalog/view/javascript/common.js" type="text/javascript" defer></script>
-<script src="catalog/view/theme/egeser/javascript/theme.js" defer></script>
-<script src="catalog/view/theme/egeser/javascript/egeser-image-fit-v1.js" defer></script>
-<script src="catalog/view/theme/egeser/javascript/egeser-consent.js" defer></script>
+<?php if (!empty($egeser_lead_success)) { ?><script>window.EgeserLeadSuccess={source:<?php echo json_encode($egeser_lead_success); ?>};</script><?php } ?>
+<script src="<?php echo $egv('catalog/view/javascript/common.js'); ?>" type="text/javascript" defer></script>
+<script src="<?php echo $egv('catalog/view/theme/egeser/javascript/theme.js'); ?>" defer></script>
+<script src="<?php echo $egv('catalog/view/theme/egeser/javascript/egeser-image-fit-v1.js'); ?>" defer></script>
+<script src="<?php echo $egv('catalog/view/theme/egeser/javascript/egeser-consent.js'); ?>" defer></script>
 
 <?php if (!empty($analytics) && is_array($analytics)) { ?>
 <?php foreach ($analytics as $analytic) { echo $analytic; } ?>

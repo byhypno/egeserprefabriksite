@@ -73,9 +73,12 @@
         wrap.setAttribute('aria-label', span.getAttribute('data-alt') || 'Proje detayını görüntüle');
       }
 
-      var img = document.createElement('img');
-      /* EGESER - Yalnizca ilk gorsel hemen yuklenir; digerleri sirasi gelmeden once (ensure). */
-      if (idx === 0) {
+      /* EGESER - Ana sayfa ilk gorseli HTML'de hazir gonderir (img.eh12-hero-lcp); varsa yeniden kullanilir. */
+      var pre = idx === 0 ? target.querySelector('img.eh12-hero-lcp') : null;
+      var img = pre || document.createElement('img');
+      if (pre) {
+        pre.classList.remove('eh12-hero-lcp');
+      } else if (idx === 0) {
         img.src = span.getAttribute('data-image');
       } else {
         img.setAttribute('data-src', span.getAttribute('data-image'));

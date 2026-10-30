@@ -1,0 +1,30 @@
+/* EGESER - Okunabilirlik / renk kontrasti (WCAG AA 4.5:1). Yalnizca metin renkleri
+   bir ton koyulastirildi; buton zeminleri ve marka renkleri degismedi. */
+
+/* Acik gri yardimci metinler (#777/#888 -> #5f5f5f) */
+.eg-breadcrumb a,.eg11-breadcrumb a,.egp-crumb a,.egp-crumb span,
+.eh12 .eh12-step p,.eg11-step p,.eg-v18-process li small,
+.eg11-spec-row dt,.eg-category-detail-panel__intro,
+.eg11-keyfact small,.eg11-regional-box span{color:#5f5f5f!important}
+.egp-meta span,.egp-related__body span{color:#69625d!important}
+.egp-end p{color:#5c5752!important}
+
+/* Beyaz zeminde kucuk kirmizi yazilar (#ef1b23/#f21b22 -> #c8161d) */
+.eh12 .eh12-step>span,.eg-v18-process li>span,.eg-v18-product-card__kicker,
+.eg-category-detail-panel__content .eg-section__eyebrow,
+.egp-label,.egp-content a{color:#c8161d!important}
+
+/* Koyu zeminde kirmizi etiketler (daha acik kirmizi) */
+.eg-offer .eg-section__eyebrow,.eg-lead-box .eg-section__eyebrow,
+.eg11-plan-panel .eg11-label{color:#ff6b70!important}
+
+/* Turuncu / amber kucuk yazilar */
+.eg-v108-summary em,.egp-side .egp-box small{color:#9a5600!important}
+.eg-v18-choice__grid article>span,.eg-guides__tag{color:#8a4d00!important}
+
+/* Kirmizi zemin uzerinde beyaz kucuk yazili iki buton: zemin bir ton koyu (4.23 -> 5.0:1) */
+.eg112-footer__cta a,#eg-consent-accept{background:#d9161d!important}
+
+/* Adres kutularindaki kucuk linkler: mobilde rahat dokunma alani */
+.eh17-location__details strong a,.eh17-location__details span a,
+.egc-location__details strong a,.egc-location__details span a{display:inline-block;padding:6px 0;min-height:24px}

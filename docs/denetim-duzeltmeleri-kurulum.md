@@ -164,3 +164,17 @@ Fabrika konumu Plus Code `CGX2+RQ Kemalpaşa` (8GC9CGX2+RQ → 38.4495625, 27.50
 | Diğer blog kapakları (ör. kışa hazırlık) | 493 KB | ~193 KB |
 | Slider görseli (ör. çift katlı) | 459 KB | ~230–270 KB; ilk açılışta yalnızca 1 tanesi |
 | Ana sayfa placeholder görselleri | 613 KB | 337 KB |
+
+---
+
+# 7. Aşama — Hız, Takip, Favicon, Sürümleme, Okunabilirlik
+
+| İş | Dosyalar | Sonuç (test) |
+|---|---|---|
+| Ana sayfa ilk slider görseli HTML'de hazır gelir (JS beklenmez); slider aynı görseli yeniden kullanır | `common/home.tpl`, `extension/module/egeser_hero_slider.tpl` | Yavaş mobil simülasyonda LCP 5,09 → 4,32 sn (3 ölçüm ortalaması) |
+| İletişim sayfası formu (klasik POST) için GA4 `generate_lead` / Ads dönüşümü artık gönderilir (başarı sayfasında, tek sefer) | `information/contact.php`, `common/header.php`, `common/header.tpl`, `javascript/theme.js` | Önceden bu formdan gelen talepler GA4'te hiç görünmüyordu |
+| Favicon 512 px (56 KB) → 32 px (1 KB); kökte `favicon.ico` ve `apple-touch-icon.png` (önceden 404) | `common/header.php`, `common/header.tpl`, `favicon.ico`, `apple-touch-icon.png`, `image/catalog/favicon/favicon-32x32.png` | |
+| Tüm yerel CSS/JS adreslerine dosya tarihi (`?v=`) eklenir; dosya değişince ziyaretçi eskisini görmez | `common/header.tpl` | |
+| Renk kontrastı: soluk gri ve küçük kırmızı/turuncu yazılar bir ton koyu; iki küçük buton zemini; adres linklerinde dokunma alanı | `stylesheet/egeser-a11y-v1.css` *(yeni)*, `common/header.tpl` | Lighthouse erişilebilirlik 93 → **100** (ana sayfa önizlemesi) |
+
+Takip notu: Çerez onayı verilmemişse GA4'e veri gönderilmez (KVKK uyumlu davranış korunur).

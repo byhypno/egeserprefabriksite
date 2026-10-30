@@ -20,7 +20,10 @@ class ControllerCommonHeader extends Controller {
 			$server = $this->config->get('config_url');
 		}
 
-		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
+		// EGESER - Sekme ikonu icin 512 px (56 KB) yerine 32 px surum varsa onu kullan.
+		if (is_file(DIR_IMAGE . 'catalog/favicon/favicon-32x32.png')) {
+			$this->document->addLink($server . 'image/catalog/favicon/favicon-32x32.png', 'icon');
+		} elseif (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
 			$this->document->addLink($server . 'image/' . $this->config->get('config_icon'), 'icon');
 		}
 
@@ -40,6 +43,13 @@ class ControllerCommonHeader extends Controller {
 		$data['base'] = $server;
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
+		// EGESER - Klasik (AJAX olmayan) form gonderiminden sonra lead olayini tek seferlik isaretle.
+		$data['egeser_lead_success'] = '';
+		if (!empty($this->session->data['egeser_lead_success'])) {
+			$data['egeser_lead_success'] = (string)$this->session->data['egeser_lead_success'];
+			unset($this->session->data['egeser_lead_success']);
+		}
+
 		$data['egeser_robots'] = $this->document->getRobots();
 
 		// EGESER - Lead odakli sitede arama, hesap, sepet ve odeme sayfalari indekslenmez.

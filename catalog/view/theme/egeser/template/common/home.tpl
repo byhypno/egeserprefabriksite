@@ -1386,6 +1386,13 @@ $eh12_phone_href = 'tel:' . preg_replace('/[^0-9+]/', '', $eh12_phone);
 
 $eh12_hero_image = '';
 $eh12_hero_href = '';
+// EGESER - Ilk slider gorseli sunucu tarafinda HTML'e yazilir (LCP icin JS beklenmez).
+$eh12_hero_slide = '';
+$eh12_hero_slide_alt = '';
+if (!empty($content_top) && preg_match('/data-image="([^"]+)"(?:[^>]*?data-alt="([^"]*)")?/', $content_top, $eh12_m)) {
+    $eh12_hero_slide = html_entity_decode($eh12_m[1], ENT_QUOTES, 'UTF-8');
+    $eh12_hero_slide_alt = isset($eh12_m[2]) ? html_entity_decode($eh12_m[2], ENT_QUOTES, 'UTF-8') : '';
+}
 $eh12_hero_name = 'Prefabrik Yapı Çözümleri';
 if (!empty($egeser_featured_products) && is_array($egeser_featured_products)) {
     foreach ($egeser_featured_products as $eh12_fp) {
@@ -1587,6 +1594,8 @@ unset($eh13_graph_item);
       <span class="eh12-hero-media__badge">PROJE / MODEL</span>
       <?php if ($eh12_hero_image) { ?>
         <img src="<?php echo htmlspecialchars($eh12_hero_image, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($eh12_hero_name, ENT_QUOTES, 'UTF-8'); ?>" width="780" height="585" fetchpriority="high" decoding="async">
+      <?php } elseif ($eh12_hero_slide) { ?>
+        <img class="eh12-hero-lcp" src="<?php echo htmlspecialchars($eh12_hero_slide, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($eh12_hero_slide_alt ? $eh12_hero_slide_alt : 'Egeser Prefabrik proje görseli', ENT_QUOTES, 'UTF-8'); ?>" width="960" height="960" fetchpriority="high" decoding="async">
       <?php } else { ?>
         <div class="eh12-hero-media__placeholder" aria-hidden="true"></div>
       <?php } ?>

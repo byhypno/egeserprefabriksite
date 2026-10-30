@@ -226,6 +226,13 @@ function bindLeadForm(form){
 
 Array.prototype.forEach.call(qa('.js-egeser-lead-form'),bindLeadForm);
 
+// EGESER - Iletisim sayfasi formu klasik POST ile gonderilir; basari sayfasinda lead olayi bir kez.
+if(window.EgeserLeadSuccess){
+  var egeserLeadFire=function(){track('lead_form_success',{customer_type:'',source:window.EgeserLeadSuccess.source || 'contact_page'});};
+  // gtag cerez onayi sonrasi yuklenir; kisa bir gecikmeyle dener.
+  if(typeof window.gtag==='function'){ egeserLeadFire(); } else { setTimeout(egeserLeadFire,1500); }
+}
+
 // [data-wa-message]: urun sayfasi gibi yerlerde href JS'de kurulur.
 // a[href*="wa.me"]: footer/iletisim/anasayfa/floating buton gibi href'i
 // zaten PHP tarafinda hazir gelen tum diger WhatsApp linklerini de

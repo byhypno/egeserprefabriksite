@@ -100,6 +100,9 @@ class ControllerInformationContact extends Controller {
 					$this->log->write('Egeser Visitor Tracker (contact_form_submit) error: ' . $e->getMessage());
 				}
 
+				// EGESER - Basari sayfasinda GA4/Ads "lead" olayi bir kez gonderilsin (bkz. common/header).
+				$this->session->data['egeser_lead_success'] = 'contact_page';
+
 				$this->response->redirect($this->url->link('information/contact/success'));
 				return;
 			} catch (Exception $e) {
