@@ -374,8 +374,11 @@ class ControllerProductCategory extends Controller {
 			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'], true), 'canonical');
 			} elseif ($page == 2) {
 			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'], true), 'prev');
+			    // EGESER - Sayfalama sayfalari kendi URL'sini canonical gosterir (siralama/limit parametreleri haric).
+			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'] . '&page=' . $page, true), 'canonical');
 			} else {
 			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'] . '&page='. ($page - 1), true), 'prev');
+			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'] . '&page=' . $page, true), 'canonical');
 			}
 
 			if ($limit && ceil($product_total / $limit) > $page) {

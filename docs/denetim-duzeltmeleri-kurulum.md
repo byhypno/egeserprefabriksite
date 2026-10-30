@@ -108,3 +108,21 @@ Dosyalar `database/` klasöründe (web erişimine kapalı):
 3. Siteyi kontrol edin
 4. `10_ESKI_YEDEKLERI_SIL.sql`
 5. Birkaç gün sorun görülmezse `oc_egeser_*_backup_20261030` tablolarını da silebilirsiniz
+
+---
+
+# 5. Aşama — Dış Denetim (PDF) Bulguları
+
+| Dosya | Değişiklik |
+|---|---|
+| `catalog/controller/product/category.php` | Sayfalama sayfaları (`?page=2`, `?page=3`…) kendi adreslerini canonical olarak gösterir. Sıralama/limit parametreleri canonical'a eklenmez. |
+| `catalog/view/theme/egeser/template/product/product.tpl` | Teknik özellikler bölümündeki geliştirici notu ("Ürün kartına girilen değerler otomatik olarak…") müşteriye yönelik bir cümleyle değiştirildi. |
+| `catalog/controller/product/product.php` | SEO adresiyle açılan ürünlerde breadcrumb'a (görünür + şema) kategori basamağı eklenir: Ana Sayfa › Prefabrik Yapılar › Tek Katlı Prefabrik Evler › Ürün. En derin, eşitlikte en az ürünlü (en özel) kategori seçilir; 50 ürünün tamamı kendi kategorisine düşer (tek katlı 20, dubleks 6, ofis 16, yemekhane 8). |
+
+## Kontrol
+- `/prefabrik-yapilar?page=2` kaynak kodunda `<link href="…/prefabrik-yapilar?page=2" rel="canonical">` olmalı.
+- Bir ürün sayfasında breadcrumb'ta kategori görünmeli; https://search.google.com/test/rich-results ile BreadcrumbList 4 öğe göstermeli.
+- Ürün sayfası "Teknik Özellikler" bölümünde geliştirici notu görünmemeli.
+
+## Yapılmadı (karar gerekli)
+- Organization ve LocalBusiness şemasında iki farklı adres var. Doğru adres netleşince tek adrese çekilecek.

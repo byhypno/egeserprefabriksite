@@ -984,7 +984,7 @@ $eg_wa_href = $eg_wa_phone !== ''
     <section class="eg11-section" id="eg-tech">
       <div class="eg11-section-head">
         <div><span class="eg11-label">TEKNİK ÖZELLİKLER</span><h2>Teknik kapsamı kategori kategori inceleyin.</h2></div>
-        <p>Ürün kartına girilen değerler otomatik olarak doğru teknik başlık altında gruplanır.</p>
+        <p>Ölçü, yapı, yalıtım, doğrama ve tesisat bilgileri; kapsam projeye ve seçilen pakete göre netleşir.</p>
       </div>
 
       <div class="eg11-spec-grid">

@@ -115,6 +115,40 @@ class ControllerProductProduct extends Controller {
 					'href' => $this->url->link('product/category', 'path=' . (int)$category_id)
 				);
 			}
+		} elseif (isset($this->request->get['product_id']) && !isset($this->request->get['manufacturer_id']) && !isset($this->request->get['search']) && !isset($this->request->get['tag'])) {
+			// EGESER - SEO URL ile acilan urunde kategori basamagi: en derin, esitlikte en az urunlu (en ozel) kategori.
+			$this->load->model('catalog/product');
+
+			$egeser_best = array();
+
+			foreach ($this->model_catalog_product->getCategories((int)$this->request->get['product_id']) as $egeser_row) {
+				$egeser_chain = array();
+				$egeser_cat = $this->model_catalog_category->getCategory((int)$egeser_row['category_id']);
+
+				while ($egeser_cat && count($egeser_chain) < 10) {
+					array_unshift($egeser_chain, $egeser_cat);
+					$egeser_cat = $egeser_cat['parent_id'] ? $this->model_catalog_category->getCategory((int)$egeser_cat['parent_id']) : array();
+				}
+
+				if (!$egeser_chain) {
+					continue;
+				}
+
+				$egeser_total = $this->model_catalog_product->getTotalProducts(array('filter_category_id' => (int)$egeser_row['category_id'], 'filter_sub_category' => true));
+
+				if (!$egeser_best || count($egeser_chain) > count($egeser_best['chain']) || (count($egeser_chain) == count($egeser_best['chain']) && $egeser_total < $egeser_best['total'])) {
+					$egeser_best = array('chain' => $egeser_chain, 'total' => $egeser_total);
+				}
+			}
+
+			if ($egeser_best) {
+				foreach ($egeser_best['chain'] as $egeser_cat) {
+					$data['breadcrumbs'][] = array(
+						'text' => $egeser_cat['name'],
+						'href' => $this->url->link('product/category', 'path=' . (int)$egeser_cat['category_id'])
+					);
+				}
+			}
 		}
 
 		$this->load->model('catalog/manufacturer');
