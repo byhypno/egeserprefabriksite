@@ -8,7 +8,7 @@ SET NAMES utf8mb4;
 -- boylece ilk yedek (orijinal veriler) asla ezilmez.
 CREATE TABLE oc_egeser_setting_backup_20261030 AS SELECT * FROM oc_setting WHERE store_id = 0 AND `key` IN ('config_product_count','config_review_status','config_review_guest','config_meta_description','config_account_id','config_checkout_id','config_affiliate_id');
 CREATE TABLE oc_egeser_product_description_backup_20261030 AS SELECT * FROM oc_product_description WHERE language_id = 2 AND product_id IN (132,136,137,138,139,140,141,143,147,148,149,151,152,153,154,155,156,157,158,160,161,162,163,164,165,167,168,169,170,171,172,173,176,177,179,181,183);
-CREATE TABLE oc_egeser_product_model_backup_20261030 AS SELECT product_id, model FROM oc_product WHERE product_id = 167;
+CREATE TABLE oc_egeser_product_backup_20261030 AS SELECT product_id, model, price FROM oc_product WHERE product_id IN (167,172);
 CREATE TABLE oc_egeser_redirect_backup_20261030 AS SELECT * FROM oc_egeser_redirect WHERE redirect_id IN (14,21,30,31);
 CREATE TABLE oc_egeser_blog_post_meta_backup_20261030 AS SELECT blog_id, meta_title, meta_description FROM oc_egeser_blog_post WHERE blog_id IN (1,3,5,6,8,9);
 
@@ -63,6 +63,9 @@ UPDATE oc_product_description SET meta_title = '237 m² Prefabrik Yemekhane Bina
 -- 7) 101 m2 ofis urun kodu
 UPDATE oc_product SET model = 'PRF-OFIS-101M2' WHERE product_id = 167 AND model = 'PRF-OFIS-100M2';
 
+-- 12) 158 m2 ofis: diger urunler gibi "Proje Bazli" (fiyat 0)
+UPDATE oc_product SET price = 0 WHERE product_id = 172;
+
 -- 8) Yonlendirme zincirleri: dogrudan son adrese
 UPDATE oc_egeser_redirect SET target_url = '/109-m2-tek-katli-prefabrik-ev' WHERE redirect_id = 21 AND target_url = '/109-m-tek-katli-prefabrik-ev';
 UPDATE oc_egeser_redirect SET target_url = '/80-m2-tek-katli-prefabrik-ev'  WHERE redirect_id = 30 AND target_url = '/80-m-tek-katli-prefabrik-ev';
@@ -86,4 +89,5 @@ SELECT
   (SELECT COUNT(*) FROM oc_product_description WHERE language_id = 2 AND product_id IN (132,136,137,138,139,140,141,143,147,148,149,151,152,153,154,155,156,157,158,160,161,162,163,164,165,167,168,169,170,171,172,173,176,177,179,181,183) AND CHAR_LENGTH(meta_title) <= 60 AND CHAR_LENGTH(meta_description) <= 160) AS urun_meta_uygun_37,
   (SELECT COUNT(*) FROM oc_egeser_redirect WHERE redirect_id IN (14,21,30,31) AND target_url IN ('/109-m2-tek-katli-prefabrik-ev','/80-m2-tek-katli-prefabrik-ev','/123-m2-tek-katli-prefabrik-ev','/tek-katli-prefabrik-evler')) AS yonlendirme_4,
   (SELECT COUNT(*) FROM oc_egeser_blog_post WHERE blog_id IN (1,3,5,6,8,9) AND CHAR_LENGTH(meta_title) <= 60 AND CHAR_LENGTH(meta_description) BETWEEN 110 AND 160) AS blog_meta_uygun_6,
-  (SELECT model FROM oc_product WHERE product_id = 167) AS urun_kodu_167;
+  (SELECT model FROM oc_product WHERE product_id = 167) AS urun_kodu_167,
+  (SELECT COUNT(*) FROM oc_product WHERE status = 1 AND price > 0) AS fiyatli_urun_0;

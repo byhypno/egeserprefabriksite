@@ -71,15 +71,16 @@ Dosyalar `database/` klasöründe (web erişimine kapalı):
 | 9 | Pasif ürüne (404) giden yönlendirme → `/tek-katli-prefabrik-evler` | 1 yönlendirme |
 | 10 | Kayıt/ödeme/ortaklık sözleşme linki → Gizlilik Politikası (id 13) | 3 ayar |
 | 11 | 6 blog yazısının meta başlık/açıklaması uygun uzunluğa getirilir | 6 yazı |
+| 12 | 158 m² ofisin 2.370.000 TL fiyatı sıfırlanır (diğer ürünler gibi "Proje Bazlı") | 1 ürün |
 
-Ürün adları, açıklamaları (sayfa içeriği), fiyatlar, görseller, SEO URL'leri, kategoriler ve teklif kayıtlarına **dokunulmaz**.
+Ürün adları, açıklamaları (sayfa içeriği), diğer fiyatlar, görseller, SEO URL'leri, kategoriler ve teklif kayıtlarına **dokunulmaz**.
 
 ## Kurulum
 1. cPanel → phpMyAdmin → `egeserp1_egeserprefabrik` veritabanını seçin.
 2. Önce **Dışa Aktar** ile tam yedek alın.
 3. **İçe Aktar** → `07_VERITABANI_DUZELTME_YUKLE.sql`.
 4. Sonuç tablosu şu değerleri göstermeli:
-   `ayar_kapatildi_3 = 3`, `sozlesme_linki_3 = 3`, `urun_meta_uygun_37 = 37`, `yonlendirme_4 = 4`, `blog_meta_uygun_6 = 6`, `urun_kodu_167 = PRF-OFIS-101M2`.
+   `ayar_kapatildi_3 = 3`, `sozlesme_linki_3 = 3`, `urun_meta_uygun_37 = 37`, `yonlendirme_4 = 4`, `blog_meta_uygun_6 = 6`, `urun_kodu_167 = PRF-OFIS-101M2`, `fiyatli_urun_0 = 0`.
 5. Admin panelinden önbelleği temizleyin.
 
 ## Güvenlik
