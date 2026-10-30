@@ -62,7 +62,7 @@
         </a>
 
         <div class="egc-contactcard">
-          <small>SHOWROOM / ÜRETİM</small>
+          <small>SHOWROOM / SATIŞ OFİSİ</small>
           <h3>Kemalpaşa / İzmir</h3>
           <p>Proje görüşmeleri ve ürün incelemeleri için ziyaret öncesinde iletişime geçmenizi öneririz.</p>
         </div>
@@ -119,13 +119,13 @@
         <div class="egc-location__content">
           <span class="egc-loc-label">KONUM &amp; SHOWROOM</span>
           <h2>Egeser Prefabrik'e ulaşın.</h2>
-          <p>Egeser Prefabrik showroom ve üretim tesisimizi ziyaret etmek için randevu oluşturabilirsiniz.</p>
+          <p>Showroom ve satış ofisimizi ya da fabrikamızı ziyaret etmek için randevu oluşturabilirsiniz.</p>
 
           <div class="egc-location__details">
             <article>
-              <small>ADRES / ÜRETİM</small>
-              <strong>Çambel Mevkii, Kemalpaşa / İzmir</strong>
-              <span>Showroom ve üretim lokasyonu</span>
+              <small>SHOWROOM / SATIŞ OFİSİ</small>
+              <strong>Irmak Depoları yanı, Çambel Ankara Cad. 35. Km, Kemalpaşa / İzmir</strong>
+              <span>Fabrika: Çambel Mah. Ankara Cad. 1558. Sok. No: 28 D: 1, Kemalpaşa / İzmir</span>
             </article>
             <article>
               <small>TELEFON</small>

@@ -1456,6 +1456,11 @@ $eh13_schema = array(
             'logo' => $eh13_logo_url,
             'image' => $eh13_logo_url,
             'sameAs' => $eh13_same_as,
+            // EGESER - Iki lokasyon: showroom/satis ofisi (LocalBusiness) ve fabrika (Place).
+            'location' => array(
+                array('@id' => rtrim($eh13_base, '/') . '/#localbusiness'),
+                array('@id' => rtrim($eh13_base, '/') . '/#factory')
+            ),
             'address' => array(
                 '@type' => 'PostalAddress',
                 'streetAddress' => 'Çambel Mahallesi Ankara Caddesi 1558. Sokak No: 28 Daire: 1',
@@ -1475,7 +1480,7 @@ $eh13_schema = array(
         array(
             '@type' => 'LocalBusiness',
             '@id' => rtrim($eh13_base, '/') . '/#localbusiness',
-            'name' => 'Egeser Prefabrik Showroom',
+            'name' => 'Egeser Prefabrik Showroom ve Satış Ofisi',
             'legalName' => 'Egeser Konteyner Prefabrik San. Tic. Ltd. Şti',
             'url' => $eh13_base,
             'telephone' => $eh12_phone,
@@ -1521,6 +1526,18 @@ $eh13_schema = array(
             ),
             'parentOrganization' => array(
                 '@id' => rtrim($eh13_base, '/') . '/#organization'
+            )
+        ),
+        array(
+            '@type' => 'Place',
+            '@id' => rtrim($eh13_base, '/') . '/#factory',
+            'name' => 'Egeser Prefabrik Fabrika (Üretim Tesisi)',
+            'address' => array(
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'Çambel Mahallesi Ankara Caddesi 1558. Sokak No: 28 Daire: 1',
+                'addressLocality' => 'Kemalpaşa',
+                'addressRegion' => 'İzmir',
+                'addressCountry' => 'TR'
             )
         )
     )
@@ -2159,9 +2176,9 @@ echo json_encode(array(
 
         <div class="eh17-location__details">
           <article>
-            <small>ADRES / ÜRETİM</small>
-            <strong>Çambel Mevkii, Kemalpaşa / İzmir</strong>
-            <span>Showroom ve üretim lokasyonu</span>
+            <small>SHOWROOM / SATIŞ OFİSİ</small>
+            <strong>Irmak Depoları yanı, Çambel Ankara Cad. 35. Km, Kemalpaşa / İzmir</strong>
+            <span>Fabrika: Çambel Mah. Ankara Cad. 1558. Sok. No: 28 D: 1, Kemalpaşa / İzmir</span>
           </article>
           <article>
             <small>TELEFON</small>

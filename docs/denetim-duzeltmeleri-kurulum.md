@@ -124,5 +124,10 @@ Dosyalar `database/` klasöründe (web erişimine kapalı):
 - Bir ürün sayfasında breadcrumb'ta kategori görünmeli; https://search.google.com/test/rich-results ile BreadcrumbList 4 öğe göstermeli.
 - Ürün sayfası "Teknik Özellikler" bölümünde geliştirici notu görünmemeli.
 
-## Yapılmadı (karar gerekli)
-- Organization ve LocalBusiness şemasında iki farklı adres var. Doğru adres netleşince tek adrese çekilecek.
+## Adresler (showroom ve fabrika ayrı)
+| Dosya | Değişiklik |
+|---|---|
+| `common/home.tpl` (şema) | LocalBusiness adı "Egeser Prefabrik Showroom ve Satış Ofisi" (Irmak Depoları yanı, 35. Km; harita pini ve çalışma saatleri burada). Fabrika ayrı bir `Place` olarak eklendi (Çambel Mah. 1558. Sok. No: 28 D: 1). Organization her iki lokasyonu `location` ile gösterir. |
+| `common/home.tpl`, `information/contact.tpl` (görünür) | "Çambel Mevkii — Showroom ve üretim lokasyonu" yerine: **Showroom / Satış Ofisi:** Irmak Depoları yanı, Çambel Ankara Cad. 35. Km; altında **Fabrika:** Çambel Mah. Ankara Cad. 1558. Sok. No: 28 D: 1. İletişim kartı etiketi "Showroom / Satış Ofisi" oldu. |
+
+**Google İşletme Profili:** Profildeki adres showroom adresiyle (Irmak Depoları yanı, 35. Km) birebir aynı olmalı. Fabrika için ayrı profil açılacaksa farklı ad ("Egeser Prefabrik Fabrika") ve aynı telefon kullanılabilir.
