@@ -1678,7 +1678,7 @@ if (!function_exists('eh12_bs_resize')) {
     if ($dot === false) { return $filename; }
     $extension = pathinfo($filename, PATHINFO_EXTENSION);
     $image_old = $filename;
-    $image_new = 'cache/' . mb_substr($filename, 0, $dot) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;
+    $image_new = 'cache/' . mb_substr($filename, 0, $dot) . '-' . (int)$width . 'x' . (int)$height . '-c.' . $extension;
     if (!is_file($image_dir . $image_new) || (filemtime($image_dir . $image_old) > filemtime($image_dir . $image_new))) {
       $info = @getimagesize($image_dir . $image_old);
       if (!$info || !in_array($info[2], array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF), true)) {
@@ -1691,7 +1691,8 @@ if (!function_exists('eh12_bs_resize')) {
       }
       if (class_exists('Image') && ($info[0] != $width || $info[1] != $height)) {
         $image = new Image($image_dir . $image_old);
-        $image->resize($width, $height);
+        // EGESER - Kutuyu doldur, tasan kismi kirp (beyaz kenar yok).
+        if (method_exists($image, 'cropResize')) { $image->cropResize($width, $height); } else { $image->resize($width, $height); }
         $image->save($image_dir . $image_new);
       } else {
         @copy($image_dir . $image_old, $image_dir . $image_new);
@@ -1720,7 +1721,7 @@ if (defined('DB_HOSTNAME') && defined('DB_USERNAME') && defined('DB_PASSWORD') &
             continue;
           }
           $eh12_bs_items[] = array(
-            'image' => 'image/' . eh12_bs_resize(DIR_IMAGE, $eh12_bs_p['image'], 150, 190),
+            'image' => 'image/' . eh12_bs_resize(DIR_IMAGE, $eh12_bs_p['image'], 300, 380),
             'title' => isset($eh12_bs_p['title']) ? $eh12_bs_p['title'] : '',
             'type' => isset($eh12_bs_p['type']) ? $eh12_bs_p['type'] : (isset($eh12_bs_p['eyebrow']) ? $eh12_bs_p['eyebrow'] : ''),
             'location' => isset($eh12_bs_p['location']) ? $eh12_bs_p['location'] : '',

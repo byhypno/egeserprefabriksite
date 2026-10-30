@@ -19,7 +19,7 @@ class ControllerExtensionModuleEgeserReferences extends Controller {
                 $image_large = '';
 
                 if (!empty($project['image']) && is_file(DIR_IMAGE . $project['image'])) {
-                    $image = $this->model_tool_image->resize($project['image'], 640, 640);
+                    $image = $this->model_tool_image->resize($project['image'], 640, 640, true);
                     $image_large = $this->model_tool_image->resize($project['image'], 1400, 1400);
                 }
 

@@ -1,6 +1,7 @@
 <?php
 class ModelToolImage extends Model {
-	public function resize($filename, $width, $height) {
+	// EGESER - $cover = true: gorsel kutuyu doldurur, tasan kisim kirpilir (beyaz kenar yok).
+	public function resize($filename, $width, $height, $cover = false) {
 		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != DIR_IMAGE) {
 			return;
 		}
@@ -8,7 +9,7 @@ class ModelToolImage extends Model {
 		$extension = pathinfo($filename, PATHINFO_EXTENSION);
 
 		$image_old = $filename;
-		$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;
+		$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . ($cover ? '-c' : '') . '.' . $extension;
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filectime(DIR_IMAGE . $image_old) > filectime(DIR_IMAGE . $image_new))) {
 			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
@@ -31,7 +32,12 @@ class ModelToolImage extends Model {
 
 			if ($width_orig != $width || $height_orig != $height) {
 				$image = new Image(DIR_IMAGE . $image_old);
-				$image->resize($width, $height);
+
+				if ($cover) {
+					$image->cropResize($width, $height);
+				} else {
+					$image->resize($width, $height);
+				}
 				$image->save(DIR_IMAGE . $image_new);
 			} else {
 				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);

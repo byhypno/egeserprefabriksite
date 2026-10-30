@@ -72,6 +72,34 @@ class Image {
 		}
 	}
 
+	// EGESER - Kutuyu tamamen doldurur, tasan kismi ortadan kirpar (beyaz kenar eklemez).
+	public function cropResize($width = 0, $height = 0) {
+		if (!$this->width || !$this->height || !$width || !$height) {
+			return;
+		}
+
+		$scale = max($width / $this->width, $height / $this->height);
+
+		$src_width = (int)round($width / $scale);
+		$src_height = (int)round($height / $scale);
+		$src_x = (int)(($this->width - $src_width) / 2);
+		$src_y = (int)(($this->height - $src_height) / 2);
+
+		$image_old = $this->image;
+		$this->image = imagecreatetruecolor($width, $height);
+
+		if ($this->mime == 'image/png') {
+			imagealphablending($this->image, false);
+			imagesavealpha($this->image, true);
+		}
+
+		imagecopyresampled($this->image, $image_old, 0, 0, $src_x, $src_y, $width, $height, $src_width, $src_height);
+		imagedestroy($image_old);
+
+		$this->width = $width;
+		$this->height = $height;
+	}
+
 	public function resize($width = 0, $height = 0, $default = '') {
 		if (!$this->width || !$this->height) {
 			return;
