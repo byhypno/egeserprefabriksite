@@ -1055,6 +1055,8 @@
 }
 .eh12 .eh17-location__details strong a{color:inherit;text-decoration:none}
 .eh12 .eh17-location__details strong a:hover{color:var(--eg-red)}
+.eh12 .eh17-location__details span a.eh17-maplink{color:var(--eg-red-text);font-weight:800;text-decoration:none;white-space:nowrap}
+.eh12 .eh17-location__details span a.eh17-maplink:hover{text-decoration:underline}
 .eh12 .eh17-location__details span{
   display:block;margin-top:4px;color:var(--eg-muted);font-size:9.5px;
 }
@@ -2185,17 +2187,17 @@ echo json_encode(array(
           <article>
             <small>SHOWROOM / SATIŞ OFİSİ</small>
             <strong>Irmak Depoları yanı, Çambel Ankara Cad. 35. Km, Kemalpaşa / İzmir</strong>
-            <span>Fabrika: Çambel Mah. Ankara Cad. 1558. Sok. No: 28 D: 1, Kemalpaşa / İzmir · <a href="https://www.google.com/maps/search/?api=1&amp;query=38.4495625%2C27.5019375" target="_blank" rel="noopener">Fabrika konumu</a></span>
+            <span>Ziyaret ve proje görüşmeleri · <a class="eh17-maplink" href="https://www.google.com/maps?q=38.44988554328141,27.497831062110418" target="_blank" rel="noopener">Konumu aç →</a></span>
           </article>
           <article>
-            <small>TELEFON</small>
+            <small>FABRİKA / ÜRETİM</small>
+            <strong>Çambel Mah. Ankara Cad. 1558. Sok. No: 28 D: 1, Kemalpaşa / İzmir</strong>
+            <span>Üretim tesisi · <a class="eh17-maplink" href="https://www.google.com/maps/search/?api=1&amp;query=38.4495625%2C27.5019375" target="_blank" rel="noopener">Konumu aç →</a></span>
+          </article>
+          <article>
+            <small>TELEFON / WHATSAPP</small>
             <strong><a href="<?php echo $eh12_phone_href; ?>"><?php echo htmlspecialchars($eh12_phone, ENT_QUOTES, 'UTF-8'); ?></a></strong>
-            <span>Satış ve proje danışmanlığı</span>
-          </article>
-          <article>
-            <small>WHATSAPP</small>
-            <strong><a href="https://wa.me/<?php echo htmlspecialchars($egeser_whatsapp, ENT_QUOTES, 'UTF-8'); ?>?text=<?php echo rawurlencode('Merhaba, prefabrik yapı modelleriniz hakkında bilgi ve teklif almak istiyorum.'); ?>" target="_blank" rel="noopener">WhatsApp'tan yazın</a></strong>
-            <span>Hızlı bilgi ve teklif talebi</span>
+            <span><a class="eh17-maplink" href="https://wa.me/<?php echo htmlspecialchars($egeser_whatsapp, ENT_QUOTES, 'UTF-8'); ?>?text=<?php echo rawurlencode('Merhaba, prefabrik yapı modelleriniz hakkında bilgi ve teklif almak istiyorum.'); ?>" target="_blank" rel="noopener">WhatsApp'tan yazın →</a></span>
           </article>
           <article>
             <small>E-POSTA</small>
@@ -2223,7 +2225,7 @@ echo json_encode(array(
           allowfullscreen></iframe>
         <div class="eh17-map__caption">
           <span>Kemalpaşa / İzmir</span>
-          <strong>Showroom &amp; Üretim</strong>
+          <strong>Showroom / Satış Ofisi</strong>
         </div>
       </div>
     </div>
