@@ -62,7 +62,7 @@ Dosyalar `database/` klasöründe (web erişimine kapalı):
 |---|---|---|
 | 1 | Kategori ürün sayısı "(0)" gizlenir (`config_product_count = 0`) | 1 ayar |
 | 2 | Kullanılmayan yorum sistemi ve misafir yorumu kapatılır | 2 ayar |
-| 3 | Ana sayfa meta açıklaması 181 → 154 karakter | 1 ayar |
+| 3 | Ana sayfa meta açıklaması 181 → 153 karakter | 1 ayar |
 | 4 | 8 kısa ürün başlığına "\| Egeser Prefabrik" eklenir | 8 ürün |
 | 5 | Ofis/yemekhane başlıkları "Fiyatları" ifadesinden arındırılır, ≤60 karakter | 18 ürün |
 | 6 | Ürün meta açıklamaları ≤160 karakter; "uygun fiyat / hemen sipariş" vaatleri çıkarıldı | 37 ürün |
