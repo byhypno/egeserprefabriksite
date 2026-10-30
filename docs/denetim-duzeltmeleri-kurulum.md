@@ -88,3 +88,23 @@ Dosyalar `database/` klasöründe (web erişimine kapalı):
 - Dosya **ikinci kez** çalıştırılırsa "tablo zaten var" hatasıyla durur; ilk yedek ezilmez.
 - Geri almak için `08_VERITABANI_DUZELTME_GERI_AL.sql` dosyasını içe aktarın. Yedek tablolar, her şey yolunda görüldükten sonra silinebilir.
 - Yerel kopyada test edildi: kurulum → kontroller beklenen değerleri verdi → ikinci çalıştırma hatayla durdu → geri alma sonrası tablolar sağlama toplamıyla birebir orijinal hale döndü.
+
+---
+
+# 4. Aşama — Eski Yedek Tabloların Silinmesi
+
+`database/10_ESKI_YEDEKLERI_SIL.sql` — Eylül 2026 paketlerinden kalan **21** yedek tabloyu siler (`oc_egeser_p3_*_bak_20260910`, `oc_egeser_p4a_*_bak_20260911`, `*_backup_20260919`, `*_removed_20260919`, `oc_egeser_redirect_backup_before_product_activation`).
+
+- Site kodu bu tabloların hiçbirini kullanmaz (kod taraması yapıldı).
+- `oc_egeser_p3_setting_bak_20260910` FTP bağlantı bilgilerini (şifre dahil) içeriyordu; silinmesinin ana nedeni budur. **FTP şifresi ayrıca cPanel → FTP Accounts bölümünden değiştirilmelidir**, çünkü bu bilgi daha önce paylaşılan veritabanı dökümlerinde de yer alıyor.
+- Yalnızca adı tek tek yazılmış tablolar silinir; joker/toplu silme yoktur. Bugünkü `*_20261030` yedeklerine dokunmaz.
+- **Geri alınamaz.** Çalıştırmadan önce phpMyAdmin → Dışa Aktar ile tam yedek alın.
+- Kontrol: sonuç tablosunda `kalan_eski_yedek = 0` görünmeli.
+- Yerel kopyada test edildi: 21 tablo silindi, ürün/yönlendirme/blog tabloları değişmedi, ikinci çalıştırma hatasız geçer.
+
+## Önerilen sıra
+1. phpMyAdmin → Dışa Aktar (tam yedek)
+2. `07_VERITABANI_DUZELTME_YUKLE.sql`
+3. Siteyi kontrol edin
+4. `10_ESKI_YEDEKLERI_SIL.sql`
+5. Birkaç gün sorun görülmezse `oc_egeser_*_backup_20261030` tablolarını da silebilirsiniz
