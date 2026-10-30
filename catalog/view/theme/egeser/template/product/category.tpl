@@ -343,7 +343,7 @@ $eg_cat_css_version = is_file($eg_cat_css_path) ? filemtime($eg_cat_css_path) : 
     </section>
     <?php } else { ?>
     <section class="eg-empty-category">
-      <p>Bu kategoride henüz yayınlanmış ürün bulunmuyor. Proje ihtiyacınız için doğrudan teklif talebi oluşturabilirsiniz.</p>
+      <p>Bu yapı tipi hazır model yerine ihtiyacınıza göre projelendirilir. Kapasite, plan ve saha bilgilerinizi paylaşın; size özel çözüm ve teklif hazırlayalım.</p>
       <a class="eg-btn eg-btn--primary js-eg-category-offer-link" href="#eg-category-offer">Teklif Talebi Oluştur</a>
     </section>
     <?php } ?>

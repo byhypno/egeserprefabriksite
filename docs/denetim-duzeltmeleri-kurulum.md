@@ -35,8 +35,7 @@ Depo kökü sunucudaki `public_html/` ile aynı yapıdadır. İlk commit orijina
 |---|---|
 | `system/library/document.php` | Sayfa bazlı robots meta için `setRobots()` / `getRobots()` eklendi. |
 | `catalog/controller/common/header.php` | Robots önceliği: sayfa ayarı → rota kuralı → genel `egeser_robots` ayarı. `product/search`, `product/compare`, `account/*`, `affiliate/*`, `checkout/*` sayfaları `noindex,follow`. |
-| `catalog/controller/product/category.php` | Alt kategoriler dahil hiç aktif ürünü olmayan kategoriler `noindex,follow` (Yatakhane, Şantiye, Sosyal Tesis, Özel Proje). Ürün eklendiği anda otomatik olarak indekslenebilir hale gelir. |
-| `catalog/controller/extension/feed/egeser_sitemap.php` | Aktif ürünü olmayan kategoriler sitemap'e eklenmez; ürün eklenince otomatik geri gelir. |
+| `catalog/view/theme/egeser/template/product/category.tpl` | Ürünü olmayan kurumsal kategorilerde (Yatakhane, Şantiye, Sosyal Tesis, Özel Proje) "henüz ürün bulunmuyor" yerine projelendirme odaklı olumlu mesaj. Bu sayfalar özgün içerikli hizmet sayfaları olduğu için **indekste ve sitemap'te kalır**. |
 | `information/egeser_hakkimizda_v2.tpl`, `information/egeser_kurumsal_v1.tpl` | H1'de bitişik okunan kelimeler ayrıldı ("Hakkımızda Egeser Prefabrik", "Kurumsal Prefabrik Yapı Çözümleri"). |
 | `product/product.tpl` | Product şeması açıklamasında başlık ve paragraflar artık birbirine yapışmıyor ("özeti122" → "özeti 122"). |
 
@@ -44,6 +43,5 @@ Depo kökü sunucudaki `public_html/` ile aynı yapıdadır. İlk commit orijina
 `system/library/document.php` sistem dosyasıdır; OCMOD önbelleğinde bu dosyanın kopyası yoktur, doğrudan yüklenebilir. Yükleme sonrası Eklentiler → Modifikasyonlar → **Yenile**.
 
 ## Kontrol
-- `https://www.egeserprefabrik.com.tr/sitemap.xml` içinde `prefabrik-yatakhane-binalari` vb. boş kategoriler görünmemeli.
-- `/prefabrik-yatakhane-binalari` kaynak kodunda `<meta name="robots" content="noindex,follow">` olmalı; `/prefabrik-yapilar` ve `/tek-katli-prefabrik-evler` sayfalarında **olmamalı**.
+- Kategori ve ürün sayfalarında `noindex` **olmamalı**.
 - Arama sayfası (`index.php?route=product/search&search=ev`) kaynak kodunda `noindex,follow` olmalı.

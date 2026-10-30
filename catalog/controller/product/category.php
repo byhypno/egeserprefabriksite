@@ -234,11 +234,6 @@ class ControllerProductCategory extends Controller {
 
 			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
-			// EGESER - Henuz urun yayinlanmamis kategori arama sonuclarinda zayif sayfa olarak gorunmesin (alt kategoriler dahil sayilir).
-			if (!$this->model_catalog_product->getTotalProducts(array('filter_category_id' => $category_id, 'filter_sub_category' => true))) {
-				$this->document->setRobots('noindex,follow');
-			}
-
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
