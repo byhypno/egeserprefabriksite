@@ -1060,7 +1060,7 @@ $eg_wa_href = $eg_wa_phone !== ''
       </div>
     </section>
 
-    <?php $eg_guides_type = $eg_is_corporate ? 'corporate' : 'house'; include(DIR_TEMPLATE . 'egeser/data/eg_guides_render.php'); ?>
+    <?php $eg_guides_type = $eg_is_corporate ? 'corporate' : 'house'; $eg_guides_context = 'product'; include(DIR_TEMPLATE . 'egeser/data/eg_guides_render.php'); ?>
 
     <section class="eg11-section" id="eg-faq">
       <div class="eg11-section-head">

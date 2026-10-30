@@ -351,6 +351,7 @@ $eg_cat_css_version = is_file($eg_cat_css_path) ? filemtime($eg_cat_css_path) : 
     <?php
     $eg_guides_lc = function_exists('mb_strtolower') ? mb_strtolower(strip_tags($heading_title), 'UTF-8') : strtolower(strip_tags($heading_title));
     $eg_guides_type = preg_match('/ofis|yönetim|yatakhane|yemekhane|şantiye|sosyal|özel proje|kurumsal/u', $eg_guides_lc) ? 'corporate' : 'house';
+    $eg_guides_context = 'category';
     include(DIR_TEMPLATE . 'egeser/data/eg_guides_render.php');
     ?>
 
