@@ -125,7 +125,7 @@
             <article>
               <small>SHOWROOM / SATIŞ OFİSİ</small>
               <strong>Irmak Depoları yanı, Çambel Ankara Cad. 35. Km, Kemalpaşa / İzmir</strong>
-              <span>Fabrika: Çambel Mah. Ankara Cad. 1558. Sok. No: 28 D: 1, Kemalpaşa / İzmir</span>
+              <span>Fabrika: Çambel Mah. Ankara Cad. 1558. Sok. No: 28 D: 1, Kemalpaşa / İzmir · <a href="https://www.google.com/maps/search/?api=1&amp;query=38.4495625%2C27.5019375" target="_blank" rel="noopener">Fabrika konumu</a></span>
             </article>
             <article>
               <small>TELEFON</small>

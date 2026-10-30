@@ -1532,6 +1532,13 @@ $eh13_schema = array(
             '@type' => 'Place',
             '@id' => rtrim($eh13_base, '/') . '/#factory',
             'name' => 'Egeser Prefabrik Fabrika (Üretim Tesisi)',
+            // Plus Code: CGX2+RQ Kemalpasa (8GC9CGX2+RQ)
+            'geo' => array(
+                '@type' => 'GeoCoordinates',
+                'latitude' => 38.4495625,
+                'longitude' => 27.5019375
+            ),
+            'hasMap' => 'https://www.google.com/maps/search/?api=1&query=38.4495625%2C27.5019375',
             'address' => array(
                 '@type' => 'PostalAddress',
                 'streetAddress' => 'Çambel Mahallesi Ankara Caddesi 1558. Sokak No: 28 Daire: 1',
@@ -2178,7 +2185,7 @@ echo json_encode(array(
           <article>
             <small>SHOWROOM / SATIŞ OFİSİ</small>
             <strong>Irmak Depoları yanı, Çambel Ankara Cad. 35. Km, Kemalpaşa / İzmir</strong>
-            <span>Fabrika: Çambel Mah. Ankara Cad. 1558. Sok. No: 28 D: 1, Kemalpaşa / İzmir</span>
+            <span>Fabrika: Çambel Mah. Ankara Cad. 1558. Sok. No: 28 D: 1, Kemalpaşa / İzmir · <a href="https://www.google.com/maps/search/?api=1&amp;query=38.4495625%2C27.5019375" target="_blank" rel="noopener">Fabrika konumu</a></span>
           </article>
           <article>
             <small>TELEFON</small>
