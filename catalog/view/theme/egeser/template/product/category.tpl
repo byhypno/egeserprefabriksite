@@ -348,6 +348,12 @@ $eg_cat_css_version = is_file($eg_cat_css_path) ? filemtime($eg_cat_css_path) : 
     </section>
     <?php } ?>
 
+    <?php
+    $eg_guides_lc = function_exists('mb_strtolower') ? mb_strtolower(strip_tags($heading_title), 'UTF-8') : strtolower(strip_tags($heading_title));
+    $eg_guides_type = preg_match('/ofis|yönetim|yatakhane|yemekhane|şantiye|sosyal|özel proje|kurumsal/u', $eg_guides_lc) ? 'corporate' : 'house';
+    include(DIR_TEMPLATE . 'egeser/data/eg_guides_render.php');
+    ?>
+
     <?php if ($description) { ?>
     <section class="eg-category-detail-panel" aria-labelledby="eg-category-detail-title">
       <div class="eg-category-detail-panel__visual">

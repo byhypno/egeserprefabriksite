@@ -54,13 +54,15 @@ class Image {
 		return $this->mime;
 	}
 
-	public function save($file, $quality = 90) {
+	// EGESER - 90 yerine 80: gozle fark edilmez, dosya ~%35-45 kucuk. JPEG progressive kaydedilir.
+	public function save($file, $quality = 80) {
 		$info = pathinfo($file);
 
 		$extension = strtolower($info['extension']);
 
 		if (is_resource($this->image) || $this->image instanceof \GdImage) {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
+				imageinterlace($this->image, true);
 				imagejpeg($this->image, $file, $quality);
 			} elseif ($extension == 'png') {
 				imagepng($this->image, $file);

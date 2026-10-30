@@ -74,10 +74,15 @@
       }
 
       var img = document.createElement('img');
-      img.src = span.getAttribute('data-image');
+      /* EGESER - Yalnizca ilk gorsel hemen yuklenir; digerleri sirasi gelmeden once (ensure). */
+      if (idx === 0) {
+        img.src = span.getAttribute('data-image');
+      } else {
+        img.setAttribute('data-src', span.getAttribute('data-image'));
+      }
       img.alt = span.getAttribute('data-alt') || 'Egeser Prefabrik proje görseli';
-      img.width = 1080;
-      img.height = 1080;
+      img.width = 960;
+      img.height = 960;
       img.decoding = 'async';
       img.loading = idx === 0 ? 'eager' : 'lazy';
 
@@ -99,11 +104,22 @@
     var current = 0;
     var timer = null;
 
+    function ensure(i){
+      var im = slides[i] && slides[i].querySelector('img[data-src]');
+      if (im) { im.src = im.getAttribute('data-src'); im.removeAttribute('data-src'); }
+    }
+
     function next(){
+      ensure((current + 1) % slides.length);
       slides[current].classList.remove('is-active');
       current = (current + 1) % slides.length;
       slides[current].classList.add('is-active');
+      ensure((current + 1) % slides.length);
     }
+
+    /* Ikinci gorseli sayfa yuklendikten sonra onceden hazirla. */
+    if (document.readyState === 'complete') { setTimeout(function(){ ensure(1); }, 1500); }
+    else { window.addEventListener('load', function(){ setTimeout(function(){ ensure(1); }, 1500); }); }
 
     function start(){
       if (!timer) timer = setInterval(next, interval);

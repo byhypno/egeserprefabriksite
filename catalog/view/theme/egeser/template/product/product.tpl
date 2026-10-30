@@ -919,7 +919,7 @@ $eg_wa_href = $eg_wa_phone !== ''
                       <img
                         src="<?php echo !empty($eg_floor_plan['popup']) ? $eg_floor_plan['popup'] : $eg_floor_plan['thumb']; ?>"
                         alt="<?php echo htmlspecialchars(strip_tags($heading_title) . ' - ' . $eg_floor_plan['eg_plan_label'], ENT_QUOTES, 'UTF-8'); ?>"
-                        loading="<?php echo $eg_floor_index === 0 ? 'eager' : 'lazy'; ?>"
+                        loading="lazy"
                         decoding="async">
                   <?php if (!empty($eg_floor_plan['popup'])) { ?></a><?php } ?>
                 </figure>
@@ -1060,6 +1060,8 @@ $eg_wa_href = $eg_wa_phone !== ''
       </div>
     </section>
 
+    <?php $eg_guides_type = $eg_is_corporate ? 'corporate' : 'house'; include(DIR_TEMPLATE . 'egeser/data/eg_guides_render.php'); ?>
+
     <section class="eg11-section" id="eg-faq">
       <div class="eg11-section-head">
         <div><span class="eg11-label">SIK SORULAN SORULAR</span><h2><?php echo $heading_title; ?> hakkında merak edilenler.</h2></div>
@@ -1103,7 +1105,7 @@ $eg_wa_href = $eg_wa_phone !== ''
 
           <div class="eg11-lead-product">
             <?php if ($thumb) { ?>
-              <img src="<?php echo $thumb; ?>" alt="<?php echo htmlspecialchars(strip_tags($heading_title), ENT_QUOTES, 'UTF-8'); ?>">
+              <img src="<?php echo $thumb; ?>" alt="<?php echo htmlspecialchars(strip_tags($heading_title), ENT_QUOTES, 'UTF-8'); ?>" loading="lazy" decoding="async">
             <?php } else { ?>
               <div class="eg11-lead-product__placeholder">EV</div>
             <?php } ?>

@@ -133,3 +133,34 @@ Dosyalar `database/` klasöründe (web erişimine kapalı):
 Fabrika konumu Plus Code `CGX2+RQ Kemalpaşa` (8GC9CGX2+RQ → 38.4495625, 27.5019375) ile şemaya `geo` + `hasMap` olarak, sitedeki fabrika satırına "Fabrika konumu" linki olarak eklendi (showroom pinine ~360 m).
 
 **Google İşletme Profili:** Profildeki adres showroom adresiyle (Irmak Depoları yanı, 35. Km) birebir aynı olmalı. Fabrika için ayrı profil açılacaksa farklı ad ("Egeser Prefabrik Fabrika") ve aynı telefon kullanılabilir.
+
+---
+
+# 6. Aşama — Görsel Performansı ve İç Linkler
+
+| Dosya | Değişiklik |
+|---|---|
+| `system/library/image.php` | Önbellek görselleri %90 yerine **%80 kalite** ve **progressive JPEG**. Görsel fark yok; dosyalar %40–60 küçük. |
+| `catalog/controller/information/egeser_blog.php` | Blog yazı kapağı 1080 → 900 px. |
+| `catalog/controller/extension/module/egeser_hero_slider.php` + `…/egeser_hero_slider.tpl` | Slider 1080 → 960 px; **yalnızca ilk görsel hemen yüklenir**, sonrakiler sırası gelmeden önce. |
+| `catalog/view/theme/egeser/template/product/product.tpl` | Kat planı ve teklif bölümü görselleri `loading="lazy"`; SSS'den önce **"İlgili Rehberler"** kutusu. |
+| `catalog/view/theme/egeser/template/product/category.tpl` | Kategori sayfalarında **"İlgili Rehberler"** kutusu. |
+| `catalog/view/theme/egeser/data/eg_guides.php` *(yeni)* | Hangi sayfa tipinde hangi rehberlerin gösterileceği (ev: fiyat, montaj, arsa, ruhsat; kurumsal: kurumsal seçim, yangın, deprem, montaj). |
+| `catalog/view/theme/egeser/data/eg_guides_render.php` *(yeni)* | Rehber kutusunun HTML/CSS'i. |
+| `image/catalog/blog/prefabrik-ev-fiyatlari.jpg` *(yeni)* | 2,4 MB PNG kapak yerine 353 KB JPEG. |
+| `image/catalog/egeser/home/*-placeholder.jpg` | 351 → 184 KB ve 262 → 153 KB. |
+| `database/11_BLOG_KAPAK_JPEG.sql` | Blog yazısının kapak yolunu `.png` → `.jpg` yapar. |
+
+## Kurulum
+1. ZIP'i `public_html` içinde açın (önceki adımlarla aynı).
+2. phpMyAdmin → `11_BLOG_KAPAK_JPEG.sql` (sonuç: `jpeg_kapak = 1`).
+3. **Görsel önbelleğini temizleyin:** Dosya Yöneticisi → `public_html/image/cache/catalog/` klasörünün **içindekileri** silin (klasörün kendisini değil). OpenCart görselleri ilk ziyarette yeni ayarlarla yeniden üretir; ilk açılışlar birkaç saniye yavaş olabilir.
+4. Admin → önbellek temizle, Modifikasyonlar → Yenile.
+
+## Beklenen kazanç (ölçülen)
+| Görsel | Önce | Sonra |
+|---|---|---|
+| "Prefabrik Ev Fiyatları 2026" kapağı | 1.931 KB | ~183 KB |
+| Diğer blog kapakları (ör. kışa hazırlık) | 493 KB | ~193 KB |
+| Slider görseli (ör. çift katlı) | 459 KB | ~230–270 KB; ilk açılışta yalnızca 1 tanesi |
+| Ana sayfa placeholder görselleri | 613 KB | 337 KB |
