@@ -15,7 +15,7 @@ $ega_css_version = is_file($ega_css_path) ? filemtime($ega_css_path) : time();
 
     <section class="ega-hero">
       <div class="ega-hero__content">
-        <h1>Kurumsal Prefabrik<br><span>Yapı Çözümleri</span></h1>
+        <h1>Kurumsal Prefabrik <br><span>Yapı Çözümleri</span></h1>
         <p class="ega-lead">
           İşletmeler, yatırımcılar ve şantiye organizasyonları için kullanım amacına göre
           planlanan prefabrik yapı çözümleri geliştiriyoruz; projelendirme, üretim, sevkiyat

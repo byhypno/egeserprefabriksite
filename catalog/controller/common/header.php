@@ -40,7 +40,20 @@ class ControllerCommonHeader extends Controller {
 		$data['base'] = $server;
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
-		$data['egeser_robots'] = $this->config->get('egeser_robots');
+		$data['egeser_robots'] = $this->document->getRobots();
+
+		// EGESER - Lead odakli sitede arama, hesap, sepet ve odeme sayfalari indekslenmez.
+		if (!$data['egeser_robots']) {
+			$egeser_route = isset($this->request->get['route']) ? (string)$this->request->get['route'] : '';
+
+			if (preg_match('#^(product/search|product/compare|account/|affiliate/|checkout/)#', $egeser_route)) {
+				$data['egeser_robots'] = 'noindex,follow';
+			}
+		}
+
+		if (!$data['egeser_robots']) {
+			$data['egeser_robots'] = $this->config->get('egeser_robots');
+		}
 		$data['links'] = $this->document->getLinks();
 
 		// EGESER - Tracking ayarlarini tema katmanina guvenli sekilde aktar.

@@ -26,3 +26,24 @@ Depo kökü sunucudaki `public_html/` ile aynı yapıdadır. İlk commit orijina
 - **DB şifresini değiştirin** (cPanel → MySQL Databases) ve `config.php` + `admin/config.php` dosyalarını güncelleyin.
 - `(0)` sayıları: Admin → Sistem → Ayarlar → Mağaza → Seçenekler → **Kategori Ürün Sayısı = Hayır**.
 - 158 m² prefabrik ofis ürününün fiyatını (2.370.000 TL) bilinçli değilse 0 yapın.
+
+---
+
+# 2. Aşama — Teknik SEO Düzeltmeleri
+
+| Dosya | Değişiklik |
+|---|---|
+| `system/library/document.php` | Sayfa bazlı robots meta için `setRobots()` / `getRobots()` eklendi. |
+| `catalog/controller/common/header.php` | Robots önceliği: sayfa ayarı → rota kuralı → genel `egeser_robots` ayarı. `product/search`, `product/compare`, `account/*`, `affiliate/*`, `checkout/*` sayfaları `noindex,follow`. |
+| `catalog/controller/product/category.php` | Alt kategoriler dahil hiç aktif ürünü olmayan kategoriler `noindex,follow` (Yatakhane, Şantiye, Sosyal Tesis, Özel Proje). Ürün eklendiği anda otomatik olarak indekslenebilir hale gelir. |
+| `catalog/controller/extension/feed/egeser_sitemap.php` | Aktif ürünü olmayan kategoriler sitemap'e eklenmez; ürün eklenince otomatik geri gelir. |
+| `information/egeser_hakkimizda_v2.tpl`, `information/egeser_kurumsal_v1.tpl` | H1'de bitişik okunan kelimeler ayrıldı ("Hakkımızda Egeser Prefabrik", "Kurumsal Prefabrik Yapı Çözümleri"). |
+| `product/product.tpl` | Product şeması açıklamasında başlık ve paragraflar artık birbirine yapışmıyor ("özeti122" → "özeti 122"). |
+
+## Kurulum
+`system/library/document.php` sistem dosyasıdır; OCMOD önbelleğinde bu dosyanın kopyası yoktur, doğrudan yüklenebilir. Yükleme sonrası Eklentiler → Modifikasyonlar → **Yenile**.
+
+## Kontrol
+- `https://www.egeserprefabrik.com.tr/sitemap.xml` içinde `prefabrik-yatakhane-binalari` vb. boş kategoriler görünmemeli.
+- `/prefabrik-yatakhane-binalari` kaynak kodunda `<meta name="robots" content="noindex,follow">` olmalı; `/prefabrik-yapilar` ve `/tek-katli-prefabrik-evler` sayfalarında **olmamalı**.
+- Arama sayfası (`index.php?route=product/search&search=ev`) kaynak kodunda `noindex,follow` olmalı.

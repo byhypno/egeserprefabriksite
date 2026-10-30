@@ -76,7 +76,7 @@ $eg_region_links = array(
     array('name' => 'Muğla', 'href' => '/mugla-prefabrik-ev')
 );
 $eg_form_default_customer_type = $eg_is_corporate ? 'Kurumsal' : 'Bireysel';
-$eg_clean_desc = trim(preg_replace('/\s+/', ' ', html_entity_decode(strip_tags($description), ENT_QUOTES, 'UTF-8')));
+$eg_clean_desc = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags(preg_replace('#<(?:br|/?(?:p|div|li|ul|ol|h[1-6]|tr|td|th|section|article))\b[^>]*>#i', ' ', $description)), ENT_QUOTES, 'UTF-8')));
 $eg_short_desc = 'Proje kapsamı, teknik özellikler, üretim, sevkiyat ve montaj seçenekleri ihtiyaca göre birlikte değerlendirilir.';
 if ($eg_clean_desc !== '') {
     $eg_sentences = preg_split('/(?<=[.!?])\s+/u', $eg_clean_desc, -1, PREG_SPLIT_NO_EMPTY);

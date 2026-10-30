@@ -16,6 +16,17 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 			INNER JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id)
 			WHERE c.status = '1'
 			  AND c2s.store_id = '" . $store_id . "'
+			  AND EXISTS (
+				SELECT 1
+				FROM " . DB_PREFIX . "category_path cp
+				INNER JOIN " . DB_PREFIX . "product_to_category p2c ON (cp.category_id = p2c.category_id)
+				INNER JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)
+				INNER JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id)
+				WHERE cp.path_id = c.category_id
+				  AND p.status = '1'
+				  AND p.date_available <= NOW()
+				  AND p2s.store_id = '" . $store_id . "'
+			  )
 			ORDER BY c.sort_order ASC, c.category_id ASC
 		");
 

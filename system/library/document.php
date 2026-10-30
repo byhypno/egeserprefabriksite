@@ -4,6 +4,7 @@ class Document {
 	private $description;
 	private $keywords;
 	private $image;
+	private $robots = '';
 	private $links = array();
 	private $styles = array();
 	private $scripts = array();
@@ -38,6 +39,15 @@ class Document {
 
 	public function getImage() {
 		return $this->image;
+	}
+
+	// EGESER - Sayfa bazli robots meta (ornegin bos kategoride noindex).
+	public function setRobots($robots) {
+		$this->robots = $robots;
+	}
+
+	public function getRobots() {
+		return $this->robots;
 	}
 
 	public function addLink($href, $rel) {

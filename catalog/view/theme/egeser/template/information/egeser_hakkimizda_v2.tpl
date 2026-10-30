@@ -15,7 +15,7 @@ $ega_css_version = is_file($ega_css_path) ? filemtime($ega_css_path) : time();
 
     <section class="ega-hero">
       <div class="ega-hero__content">
-        <h1>Hakkımızda<br><span>Egeser Prefabrik</span></h1>
+        <h1>Hakkımızda <br><span>Egeser Prefabrik</span></h1>
         <p class="ega-lead">
           Bireysel prefabrik evlerden kurumsal yapılara kadar; projelendirme, üretim,
           sevkiyat ve montaj süreçlerini tek merkezden yöneten bütüncül yapı çözümleri sunuyoruz.
