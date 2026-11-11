@@ -193,3 +193,27 @@ Takip notu: Çerez onayı verilmemişse GA4'e veri gönderilmez (KVKK uyumlu dav
 1. `https://www.egeserprefabrik.com.tr/sitemap.xml` açılınca `<image:loc>` satırları görünmeli.
 2. Google Search Console → **Site haritaları** → `sitemap.xml` → **yeniden gönder**.
 3. Etkisi 2–6 hafta içinde Google Görseller'de (`site:egeserprefabrik.com.tr`) görülür.
+
+---
+
+# 9. Aşama — Ürün Görseli Dosya Adları
+
+Bozuk adlar (ör. `urunler/156/80-m-tek-katl-prefabrik-ev-1.jpg`) SEO uyumlu adlara taşınır:
+`prefabrik-urunler/80-m2-tek-katli-prefabrik-ev/80-m2-tek-katli-prefabrik-ev-dis-gorunum.jpg`.
+Ad, ürünün SEO adresinden türetilir; görev ekleri: `dis-gorunum`, `gorsel-N`, `kat-plani-N` (ev planları), `plan-N` (ofis/yemekhane planları), `on/sag/sol-cephe`.
+
+- 181 görsel (50 ana + 131 ek). Tam liste: `database/12_GORSEL_ADLANDIRMA_LISTESI.csv`.
+- **Eski dosyalar silinmez, kopyalanır** → Google'da indekslenmiş eski görsel adresleri çalışmaya devam eder.
+- Kat planı algılaması dosya adına bağlı olduğundan tüm adlar simüle edildi: hiçbir görselin plan etiketi değişmez (ofis/yemekhane planları bilinçli olarak `plan-N`).
+- Araç (`egeser-gorsel-adlandirma.php`) şifreli olduğu için depoda yoktur; ayrıca teslim edildi.
+
+## Kullanım
+1. Veritabanı yedeği alın (phpMyAdmin → Dışa Aktar).
+2. `egeser-gorsel-adlandirma.php` dosyasını `public_html` içine yükleyin.
+3. Önizleme: `https://www.egeserprefabrik.com.tr/egeser-gorsel-adlandirma.php?anahtar=…` → tüm satırlar "hazır" olmalı.
+4. Uygula: aynı adrese `&calistir=1` ekleyin. Sonuç: "Kopyalanan dosya: 181 | güncellenen kayıt: 181 | atlanan: 0".
+5. Admin → önbellek temizle; birkaç ürün sayfasını kontrol edin.
+6. **Dosyayı sunucudan silin.**
+7. Sorun olursa: `&geri_al=1` (dosyayı silmeden önce).
+
+Yerel test: yanlış şifre → 404; önizleme DB'yi değiştirmez; çalıştırma 181/181; ikinci çalıştırma reddedilir; geri alma sonrası tablolar sağlama toplamıyla birebir eski hali.
