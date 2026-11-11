@@ -91,3 +91,10 @@
   .egref__lightbox-info h3{font-size:19px}
   .egref__lightbox-nav{width:36px;height:36px}
 }
+
+/* EGESER - Lightbox: kare gorsel ekran yuksekligine gore kuculur; baslik ve bilgiler her zaman tam gorunur. */
+.egref__lightbox-dialog{width:min(760px,100%,calc(90vh - 170px));max-height:none}
+.egref__lightbox-info{padding:16px 22px 18px;overflow:visible}
+.egref__lightbox-info h3{font-size:20px;margin-bottom:8px}
+.egref__lightbox-info p:empty{display:none}
+@media (max-width:767px){.egref__lightbox-dialog{width:min(100%,calc(100vh - 220px));max-height:none}.egref__lightbox-info{padding:14px 16px 16px}.egref__lightbox-info h3{font-size:18px}}
