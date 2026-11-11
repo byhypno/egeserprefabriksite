@@ -217,3 +217,26 @@ Ad, ürünün SEO adresinden türetilir; görev ekleri: `dis-gorunum`, `gorsel-N
 7. Sorun olursa: `&geri_al=1` (dosyayı silmeden önce).
 
 Yerel test: yanlış şifre → 404; önizleme DB'yi değiştirmez; çalıştırma 181/181; ikinci çalıştırma reddedilir; geri alma sonrası tablolar sağlama toplamıyla birebir eski hali.
+
+---
+
+# 10. Aşama — Search Console Kapsam Raporu (11.11.2026)
+
+**Teşhis (Search Console dışa aktarımları):**
+- 115 "yönlendirme hatası"nın 99'u, 403'lerin 9'u, "taranan"ların 10'u **site içi arama spam'i** (`?route=product/search&search=…Amsiga.com… cvv…`). Hiçbiri dizinde değil; Paket A'dan beri `noindex` ile 200 dönüyor, ama tarama bütçesini tüketiyor.
+- 27 ürün `?tag=` varyantı, 5 eski Journal blog etiketi.
+- 9 adet 404: eski site adresleri, pasif ürünler.
+- 11 gerçek sayfa (5 yemekhane, 2 blog, Projelerimiz, SSS, Gizlilik, Ev Modelleri) "Keşfedildi – dizine eklenmedi": Google henüz taramadı.
+- Yönlendirme tablosunda **28 pasif kayıt** "pasifken engelle" ayarıyla 404 veriyordu; notlarında "ürün hazır olduğunda aktif edilmeli" yazıyordu. 45/46 numaralı kayıtlar **Hakkımızda ve Kurumsal'ın** eski `index.php` adreslerini 404'e düşürüyordu.
+
+| Dosya | Değişiklik |
+|---|---|
+| `robots.txt` | Arama, karşılaştırma, hesap/sepet/ödeme, `?tag=`, eski blog etiketi, `sort`/`limit` varyantları taramaya kapatıldı. Test: 8 istenmeyen tür engelli; ürün, blog, sayfalama, görsel, CSS/JS, sitemap, doğrulama dosyaları dahil 18 önemli adres açık. |
+| `database/14_ESKI_ADRES_YONLENDIRMELERI.sql` | 22 pasif yönlendirme aktif; 6 yönlendirmenin hedefi mevcut sayfalara çevrildi (45→/hakkimizda, 46→/kurumsal, 12→/projelerimiz, 43→/gizlilik-politikasi, 44→/sss, 65→/80-m2-…); 7 yeni eski-adres yönlendirmesi. Yedek alır, ikinci çalıştırmada durur. Test: 28 aktif + 7 yeni, kalan pasif 0, zincir 0, 41 hedefin tamamı canlıda 200. |
+| `database/15_ESKI_ADRES_YONLENDIRMELERI_GERI_AL.sql` | Geri alma (test: tablo birebir eski hal). |
+
+## Kurulum
+1. `robots.txt` → `public_html` (eskisinin üzerine).
+2. phpMyAdmin → `14_ESKI_ADRES_YONLENDIRMELERI.sql` → sonuç: `aktif_edilen 28 | yeni_eklenen 7 | kalan_pasif 0`.
+3. Search Console → Sayfa sayısı → "Bulunamadı (404)" ve "Yeniden yönlendirme hatası" satırları → **DÜZELTMEYİ DOĞRULA**.
+4. Search Console → robots.txt raporu (Ayarlar → robots.txt) yeni dosyayı birkaç saat içinde görür.

@@ -1,4 +1,18 @@
 User-agent: *
-Disallow:
+# Site ici arama: spam botlarinin urettigi binlerce adres (Search Console 2026-11)
+Disallow: /*route=product/search
+Disallow: /*route=product/compare
+# Kullanilmayan hesap / sepet / odeme sayfalari
+Disallow: /*route=account/
+Disallow: /*route=checkout/
+Disallow: /*route=affiliate/
+# Eski tema etiket ve siralama varyantlari (canonical zaten ana sayfayi gosterir)
+Disallow: /*?tag=
+Disallow: /*&tag=
+Disallow: /*journal_blog_tag=
+Disallow: /*?sort=
+Disallow: /*&sort=
+Disallow: /*?limit=
+Disallow: /*&limit=
 
 Sitemap: https://www.egeserprefabrik.com.tr/sitemap.xml
