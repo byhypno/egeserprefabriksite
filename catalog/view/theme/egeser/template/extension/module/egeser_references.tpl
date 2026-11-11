@@ -13,11 +13,12 @@
 
     <div class="egref__grid">
       <?php foreach ($projects as $index => $project) { ?>
+      <?php $egref_alt = $project['title'] . (!empty($project['location']) ? ' – ' . $project['location'] : '') . ' | Egeser Prefabrik teslim edilen proje'; ?>
       <article class="egref__card">
         <button type="button" class="egref__media" data-egref-open="<?php echo (int) $index; ?>" aria-label="<?php echo htmlspecialchars($project['title'], ENT_QUOTES, 'UTF-8'); ?> - büyük görseli aç">
           <?php if ($project['image']) { ?>
             <img src="<?php echo htmlspecialchars($project['image'], ENT_QUOTES, 'UTF-8'); ?>"
-                 alt="<?php echo htmlspecialchars($project['title'], ENT_QUOTES, 'UTF-8'); ?>"
+                 alt="<?php echo htmlspecialchars($egref_alt, ENT_QUOTES, 'UTF-8'); ?>"
                  width="640" height="640" loading="lazy" decoding="async">
           <?php } else { ?>
             <div class="egref__placeholder">Proje görseli eklenecek</div>

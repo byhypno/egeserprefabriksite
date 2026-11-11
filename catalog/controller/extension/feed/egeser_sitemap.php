@@ -39,7 +39,7 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 
 		// Ürünler
 		$product_query = $this->db->query("
-			SELECT p.product_id, p.date_modified
+			SELECT p.product_id, p.date_modified, p.image
 			FROM " . DB_PREFIX . "product p
 			INNER JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id)
 			WHERE p.status = '1'
@@ -56,12 +56,23 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 			);
 
 			if ($this->isSeoUrl($url)) {
+				// EGESER - Gorsel sitemap: urun ana gorseli + ek gorseller (kat planlari dahil).
+				$images = array();
+				if (!empty($row['image'])) {
+					$images[] = $row['image'];
+				}
+				$image_query = $this->db->query("SELECT image FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$row['product_id'] . "' ORDER BY sort_order ASC");
+				foreach ($image_query->rows as $image_row) {
+					$images[] = $image_row['image'];
+				}
+
 				$this->addUrl(
 					$urls,
 					$url,
 					!empty($row['date_modified']) ? $row['date_modified'] : '',
 					'weekly',
-					'0.7'
+					'0.7',
+					$images
 				);
 			}
 		}
@@ -86,6 +97,40 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 			if ($this->isSeoUrl($url)) {
 				$this->addUrl($urls, $url, '', 'monthly', '0.6');
 			}
+		}
+
+		// EGESER - Gorsel sitemap: gercek proje fotograflari Projelerimiz sayfasina ve
+		// konumu eslesen sehir sayfasina baglanir (egeser_city ile ayni eslestirme).
+		$project_images = array();
+		$city_project_images = array();
+		$city_names = array(
+			'izmir-prefabrik-ev' => 'İzmir',
+			'manisa-prefabrik-ev' => 'Manisa',
+			'aydin-prefabrik-ev' => 'Aydın',
+			'usak-prefabrik-ev' => 'Uşak',
+			'balikesir-prefabrik-ev' => 'Balıkesir',
+			'mugla-prefabrik-ev' => 'Muğla'
+		);
+		$references_query = $this->db->query("SELECT `setting` FROM `" . DB_PREFIX . "module` WHERE `code` = 'egeser_references' ORDER BY `module_id` ASC LIMIT 1");
+		if ($references_query->num_rows) {
+			$references = json_decode($references_query->row['setting'], true);
+			if (is_array($references) && !empty($references['projects']) && is_array($references['projects'])) {
+				foreach ($references['projects'] as $project) {
+					if (empty($project['enabled']) || empty($project['image'])) {
+						continue;
+					}
+					$project_images[] = $project['image'];
+					$location = !empty($project['location']) ? mb_strtolower($project['location'], 'UTF-8') : '';
+					foreach ($city_names as $city_slug => $city_name) {
+						if ($location !== '' && mb_strpos($location, mb_strtolower($city_name, 'UTF-8')) !== false) {
+							$city_project_images[$city_slug][] = $project['image'];
+						}
+					}
+				}
+			}
+		}
+		if ($project_images) {
+			$this->addUrl($urls, rtrim($this->config->get('config_url'), '/') . '/projelerimiz', '', 'monthly', '0.6', $project_images);
 		}
 
 		// Özel iletişim SEO URL'si
@@ -113,7 +158,8 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 				rtrim($this->config->get('config_url'), '/') . '/' . $city_slug,
 				'',
 				'monthly',
-				'0.75'
+				'0.75',
+				isset($city_project_images[$city_slug]) ? $city_project_images[$city_slug] : array()
 			);
 		}
 
@@ -122,7 +168,7 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 		$this->addUrl($urls, $blog_base, '', 'weekly', '0.7');
 
 		$blog_query = $this->db->query("
-			SELECT slug, date_modified
+			SELECT slug, date_modified, image
 			FROM " . DB_PREFIX . "egeser_blog_post
 			WHERE status = '1'
 			ORDER BY date_published DESC, blog_id DESC
@@ -134,12 +180,13 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 				$blog_base . '/' . ltrim($row['slug'], '/'),
 				!empty($row['date_modified']) ? $row['date_modified'] : '',
 				'monthly',
-				'0.7'
+				'0.7',
+				!empty($row['image']) ? array(ltrim($row['image'], '/')) : array()
 			);
 		}
 
 		$xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-		$xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+		$xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">' . "\n";
 
 		foreach ($urls as $item) {
 			$xml .= "  <url>\n";
@@ -155,6 +202,12 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 
 			$xml .= '    <changefreq>' . $item['changefreq'] . "</changefreq>\n";
 			$xml .= '    <priority>' . $item['priority'] . "</priority>\n";
+
+			foreach ($item['images'] as $image_loc) {
+				$xml .= "    <image:image>\n";
+				$xml .= '      <image:loc>' . htmlspecialchars($image_loc, ENT_QUOTES, 'UTF-8') . "</image:loc>\n";
+				$xml .= "    </image:image>\n";
+			}
 			$xml .= "  </url>\n";
 		}
 
@@ -163,7 +216,7 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 		$this->response->setOutput($xml);
 	}
 
-	private function addUrl(&$urls, $loc, $lastmod, $changefreq, $priority) {
+	private function addUrl(&$urls, $loc, $lastmod, $changefreq, $priority, $images = array()) {
 		$loc = trim((string)$loc);
 
 		if ($loc === '') {
@@ -177,9 +230,28 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 				'loc' => $loc,
 				'lastmod' => $lastmod,
 				'changefreq' => $changefreq,
-				'priority' => $priority
+				'priority' => $priority,
+				'images' => array()
 			);
 		}
+
+		foreach ((array)$images as $image) {
+			$image_url = $this->imageUrl($image);
+			if ($image_url !== '' && !in_array($image_url, $urls[$key]['images'], true) && count($urls[$key]['images']) < 1000) {
+				$urls[$key]['images'][] = $image_url;
+			}
+		}
+	}
+
+	// EGESER - image/ altindaki dosyanin tam adresi; dosya yoksa bos doner.
+	private function imageUrl($path) {
+		$path = ltrim(str_replace('\\', '/', trim((string)$path)), '/');
+
+		if ($path === '' || !is_file(DIR_IMAGE . $path)) {
+			return '';
+		}
+
+		return rtrim($this->config->get('config_url'), '/') . '/image/' . implode('/', array_map('rawurlencode', explode('/', $path)));
 	}
 
 	private function isSeoUrl($url) {

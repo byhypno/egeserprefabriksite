@@ -178,3 +178,18 @@ Fabrika konumu Plus Code `CGX2+RQ Kemalpaşa` (8GC9CGX2+RQ → 38.4495625, 27.50
 | Renk kontrastı: soluk gri ve küçük kırmızı/turuncu yazılar bir ton koyu; iki küçük buton zemini; adres linklerinde dokunma alanı | `stylesheet/egeser-a11y-v1.css` *(yeni)*, `common/header.tpl` | Lighthouse erişilebilirlik 93 → **100** (ana sayfa önizlemesi) |
 
 Takip notu: Çerez onayı verilmemişse GA4'e veri gönderilmez (KVKK uyumlu davranış korunur).
+
+---
+
+# 8. Aşama — Google Görseller: Gerçek Ürün ve Proje Fotoğrafları
+
+| Dosya | Değişiklik |
+|---|---|
+| `catalog/controller/extension/feed/egeser_sitemap.php` | Sitemap'e **görsel kayıtları** (`image:image`) eklendi: 50 ürünün ana ve ek görselleri (kat planları dahil), **56 gerçek proje fotoğrafı** `/projelerimiz` sayfasına, konumu eşleşen projeler şehir sayfalarına (İzmir 26, Manisa 30), blog kapakları yazılarına. Toplam ~305 kayıt, 249 benzersiz görsel; hepsi Googlebot-Image ile 200 döndü. Dosyası olmayan görsel listeye girmez. |
+| `catalog/view/theme/egeser/template/extension/module/egeser_references.tpl` | Proje fotoğrafı alt metni: "52 m² Prefabrik Ev" → "52 m² Prefabrik Ev – Manisa-Gördes \| Egeser Prefabrik teslim edilen proje". Projelerimiz, şehir sayfaları ve ana sayfa proje bölümünde geçerli. |
+| `catalog/view/theme/egeser/template/product/product.tpl` | Galeri alt metinleri: "ana görsel / detay görseli" → "… – dış görünüm, Egeser Prefabrik" / "… – görsel 2, Egeser Prefabrik". |
+
+## Yükleme sonrası
+1. `https://www.egeserprefabrik.com.tr/sitemap.xml` açılınca `<image:loc>` satırları görünmeli.
+2. Google Search Console → **Site haritaları** → `sitemap.xml` → **yeniden gönder**.
+3. Etkisi 2–6 hafta içinde Google Görseller'de (`site:egeserprefabrik.com.tr`) görülür.
