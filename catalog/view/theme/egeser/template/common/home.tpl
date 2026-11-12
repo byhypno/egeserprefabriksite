@@ -99,8 +99,10 @@
 .eh12 .eh12-bestsellers{padding:34px 0;background:#fff;border-bottom:1px solid var(--eh12-line)}
 .eh12 .eh12-bestsellers__head{margin-bottom:18px}
 .eh12 .eh12-bestsellers__head .eh12-label{margin-bottom:0}
-.eh12 .eh12-bestsellers__track-wrap{width:100%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}
-.eh12 .eh12-bestsellers__track{display:flex;gap:26px;width:max-content;animation:eh12-marquee 44s linear infinite}
+.eh12 .eh12-bestsellers__track-wrap{width:100%;overflow-x:auto;-webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}
+.eh12 .eh12-bestsellers__track{display:flex;gap:26px;width:max-content}
+.eh12 .eh12-bestsellers__track-wrap.is-looping{overflow:hidden}
+.eh12 .eh12-bestsellers__track-wrap.is-looping .eh12-bestsellers__track{padding-right:26px;animation:eh12-marquee 44s linear infinite}
 .eh12 .eh12-bestsellers__track-wrap:hover .eh12-bestsellers__track{animation-play-state:paused}
 .eh12 .eh12-bestsellers__item{position:relative;flex:0 0 auto;display:block;width:142px;height:178px;border-radius:14px;overflow:hidden;text-decoration:none;background:#eee;box-shadow:0 6px 18px rgba(20,20,20,.06)}
 .eh12 .eh12-bestsellers__item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
@@ -113,6 +115,7 @@
 @media(max-width:640px){
   .eh12 .eh12-bestsellers__item{width:112px;height:144px}
   .eh12 .eh12-bestsellers__track{gap:16px}
+  .eh12 .eh12-bestsellers__track-wrap.is-looping .eh12-bestsellers__track{padding-right:16px}
 }
 
 /* AUDIENCE */
@@ -1641,7 +1644,7 @@ unset($eh13_graph_item);
 <section class="eh12-stats">
   <div class="eh12-container eh12-stats__grid">
     <div class="eh12-stats__item"><span class="eh12-stats__num" data-eh12-count="8" data-eh12-suffix="+">8+</span><span class="eh12-stats__label">Yıllık Tecrübe<br>(2018'den beri)</span></div>
-    <div class="eh12-stats__item"><span class="eh12-stats__num" data-eh12-count="42" data-eh12-suffix=" M²">42 M²</span><span class="eh12-stats__label">Ortalama Günlük<br>Modüler Yapı Üretimi</span></div>
+    <div class="eh12-stats__item"><span class="eh12-stats__num" data-eh12-count="42" data-eh12-suffix=" M²">42 M²</span><span class="eh12-stats__label">Ortalama Günlük<br>Prefabrik Yapı Üretimi</span></div>
     <div class="eh12-stats__item"><span class="eh12-stats__num" data-eh12-count="4" data-eh12-suffix="+">4+</span><span class="eh12-stats__label">Aylık Prefabrik Ev<br>Kurulumu (min. 80 m²)</span></div>
     <div class="eh12-stats__item"><span class="eh12-stats__num" data-eh12-count="233" data-eh12-suffix="+">233+</span><span class="eh12-stats__label">Google<br>Değerlendirmesi</span></div>
   </div>
@@ -1772,7 +1775,7 @@ if (defined('DB_HOSTNAME') && defined('DB_USERNAME') && defined('DB_PASSWORD') &
     </div>
     <div class="eh12-bestsellers__track-wrap">
       <div class="eh12-bestsellers__track">
-        <?php foreach (array_merge($eh12_bs_items, $eh12_bs_items) as $eh12_bs_item) { ?>
+        <?php foreach ($eh12_bs_items as $eh12_bs_item) { ?>
         <a class="eh12-bestsellers__item" href="<?php echo htmlspecialchars($eh12_bs_item['link'], ENT_QUOTES, 'UTF-8'); ?>">
           <img src="<?php echo htmlspecialchars($eh12_bs_item['image'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($eh12_bs_item['title'], ENT_QUOTES, 'UTF-8'); ?>" width="150" height="190" loading="lazy" decoding="async">
           <?php if (!empty($eh12_bs_item['title']) || !empty($eh12_bs_item['location'])) { ?>
@@ -1787,6 +1790,25 @@ if (defined('DB_HOSTNAME') && defined('DB_USERNAME') && defined('DB_PASSWORD') &
     </div>
   </div>
 </section>
+<script>
+(function () {
+  /* Kayan bant için ikinci kopya yalnızca tarayıcıda eklenir: HTML'de her proje linki bir kez yer alır.
+     Kopya ekran okuyuculardan ve klavye sırasından gizlenir. */
+  var wrap = document.querySelector('.eh12-bestsellers__track-wrap');
+  if (!wrap || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  var track = wrap.querySelector('.eh12-bestsellers__track');
+  var items = track ? track.children : [];
+  for (var i = 0, n = items.length; i < n; i++) {
+    var clone = items[i].cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    clone.setAttribute('tabindex', '-1');
+    var img = clone.querySelector('img');
+    if (img) img.setAttribute('alt', '');
+    track.appendChild(clone);
+  }
+  if (n) wrap.classList.add('is-looping');
+})();
+</script>
 <?php } ?>
 
 <section class="eh12-section" id="eh13-models">
