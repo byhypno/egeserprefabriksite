@@ -1465,6 +1465,9 @@ $eh13_schema = array(
             'logo' => $eh13_logo_url,
             'image' => $eh13_logo_url,
             'sameAs' => $eh13_same_as,
+            // EGESER - Ayni sirketin iki markasi: Egeser Prefabrik (bu site) ve Egeser Konteyner (kardes site).
+            // Kardes site sameAs'e EKLENMEZ (sameAs = ayni varlik demektir); ortak tuzel kisilik parentOrganization ile baglanir.
+            'parentOrganization' => array('@id' => rtrim($eh13_base, '/') . '/#legal-entity'),
             // EGESER - Iki lokasyon: showroom/satis ofisi (LocalBusiness) ve fabrika (Place).
             'location' => array(
                 array('@id' => rtrim($eh13_base, '/') . '/#localbusiness'),
@@ -1476,6 +1479,21 @@ $eh13_schema = array(
                 'addressLocality' => 'Kemalpaşa',
                 'addressRegion' => 'İzmir',
                 'addressCountry' => 'TR'
+            )
+        ),
+        array(
+            '@type' => 'Organization',
+            '@id' => rtrim($eh13_base, '/') . '/#legal-entity',
+            'name' => 'Egeser Konteyner Prefabrik San. Tic. Ltd. Şti',
+            'legalName' => 'Egeser Konteyner Prefabrik San. Tic. Ltd. Şti',
+            'subOrganization' => array(
+                array('@id' => rtrim($eh13_base, '/') . '/#organization'),
+                array(
+                    '@type' => 'Organization',
+                    '@id' => 'https://www.egeserkonteyner.com/#organization',
+                    'name' => 'Egeser Konteyner',
+                    'url' => 'https://www.egeserkonteyner.com/'
+                )
             )
         ),
         array(
