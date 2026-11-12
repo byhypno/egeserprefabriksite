@@ -327,7 +327,11 @@ $eg_cat_css_version = is_file($eg_cat_css_path) ? filemtime($eg_cat_css_path) : 
             <div class="eg-v18-product-card__kicker"><?php echo $is_residential ? 'PREFABRİK EV MODELİ' : 'PREFABRİK YAPI ÇÖZÜMÜ'; ?></div>
             <h3><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h3>
             <?php if ($product['description']) { ?><p><?php echo $product['description']; ?></p><?php } ?>
+            <?php if (!empty($product['egeser_start_price'])) { ?>
+            <div class="eg-v18-price-note eg-v18-price-note--start"><span>BAŞLANGIÇ FİYATI</span><strong><?php echo $product['egeser_start_price']; ?>'den başlayan fiyatlarla</strong></div>
+            <?php } else { ?>
             <div class="eg-v18-price-note"><span>PROJE BAZLI</span><strong>Fiyat / teklif için iletişime geçin</strong></div>
+            <?php } ?>
             <div class="eg-card-actions">
               <a class="eg-btn eg-btn--outline" href="<?php echo $product['href']; ?>">Detayları İncele</a>
               <a class="eg-btn eg-btn--primary js-eg-category-offer-link js-eg-model-offer" href="#eg-category-offer" data-product-id="<?php echo (int)$product['product_id']; ?>" data-product-name="<?php echo htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8'); ?>">Bu model için teklif al</a>

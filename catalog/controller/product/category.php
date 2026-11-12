@@ -275,6 +275,7 @@ class ControllerProductCategory extends Controller {
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
+					'egeser_start_price' => ($price !== false && ((float)$result['special'] ? (float)$result['special'] : (float)$result['price']) > 0) ? number_format((float)$this->currency->format($this->tax->calculate((float)$result['special'] ? $result['special'] : $result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], '', false), 0, ',', '.') . ' TL' : '',
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $result['rating'],
 					'href'        => $this->url->link('product/product', 'product_id=' . (int)$result['product_id'])

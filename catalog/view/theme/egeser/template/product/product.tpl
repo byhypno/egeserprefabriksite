@@ -114,6 +114,13 @@ $eg_has_real_price = (
     strpos($eg_price_probe, 'text_') === false &&
     (int)$eg_price_digits > 0
 );
+/* Başlangıç fiyatı: yerel formatta, kuruşsuz (ör. 900.000 ₺). */
+$eg_price_display = '';
+if ($eg_has_real_price && !empty($egeser_schema_price)) {
+    $eg_price_display = number_format((float)$egeser_schema_price, 0, ',', '.') . ' ₺';
+} elseif ($eg_has_real_price) {
+    $eg_price_display = $eg_price_probe;
+}
 
 /* =========================
    EGESER V11 UI DATA LAYER
@@ -429,7 +436,7 @@ $eg_wa_href = $eg_wa_phone !== ''
 .eg-v11 .eg11-quote-card__top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
 .eg-v11 .eg11-quote-card__top strong{font-size:19px;line-height:1.25}
 .eg-v11 .eg11-quote-card__top span{display:block;margin-top:4px;color:#c9c9c9;font-size:12px;line-height:1.5}
-.eg-v11 .eg11-price{font-size:27px;font-weight:900;color:#fff}
+.eg-v11 .eg11-price{font-size:27px;font-weight:900;color:#fff;text-align:right;white-space:nowrap;line-height:1.15}
 .eg-v11 .eg11-actions{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:9px;margin-top:16px}
 .eg-v11 .eg11-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:11px 14px;border-radius:11px;border:1px solid transparent;font-size:13px;font-weight:900;transition:.2s ease}
 .eg-v11 .eg11-btn:hover{transform:translateY(-1px)}
@@ -853,15 +860,15 @@ $eg_wa_href = $eg_wa_phone !== ''
           <div class="eg11-quote-card__top">
             <div>
               <?php if ($eg_has_real_price) { ?>
-                <strong>Güncel satış fiyatı</strong>
-                <span>Seçenekler ve uygulama kapsamına göre netleşebilir.</span>
+                <strong>Bu model için başlangıç fiyatı</strong>
+                <span>Başlangıç fiyatıdır; KDV, kapsam, nakliye ve montaj koşulları projeye göre netleşir.</span>
               <?php } else { ?>
                 <strong>Bu model için size özel teklif hazırlayalım</strong>
                 <span>Kurulum yeri, teknik kapsam ve opsiyonları birlikte değerlendirelim.</span>
               <?php } ?>
             </div>
             <?php if ($eg_has_real_price) { ?>
-              <div class="eg11-price"><?php echo $special ? $special : $price; ?></div>
+              <div class="eg11-price"><?php echo $eg_price_display; ?></div>
             <?php } ?>
           </div>
 
@@ -1143,24 +1150,39 @@ $eg_wa_href = $eg_wa_phone !== ''
 </main>
 
 <?php
+$eg_schema_has_offer = ($eg_has_real_price && !empty($egeser_schema_price));
+$eg_site_base = rtrim(defined('HTTPS_SERVER') ? HTTPS_SERVER : 'https://www.egeserprefabrik.com.tr/', '/');
+$eg_org_ref = array('@type' => 'Organization', '@id' => $eg_site_base . '/#organization', 'name' => 'Egeser Prefabrik', 'url' => $eg_site_base . '/');
 $eg_product_schema = array(
     '@context' => 'https://schema.org',
-    '@type' => 'Product',
+    '@type' => $eg_schema_has_offer ? 'Product' : 'Service',
     'name' => trim(strip_tags($heading_title)),
     'description' => $eg_clean_desc,
     'url' => $eg_current_url
 );
-if (!empty($model)) { $eg_product_schema['sku'] = trim(strip_tags($model)); }
-if (!empty($manufacturer)) { $eg_product_schema['brand'] = array('@type' => 'Brand', 'name' => trim(strip_tags($manufacturer))); }
 if (!empty($eg_image_schema)) { $eg_product_schema['image'] = $eg_image_schema; }
-if (!empty($eg_attr_props)) { $eg_product_schema['additionalProperty'] = $eg_attr_props; }
-if ($eg_has_real_price && !empty($egeser_schema_price)) {
+if ($eg_schema_has_offer) {
+    /* Fiyatlı modeller: Product + başlangıç fiyatlı Offer (fiyat sayfada görünür). */
+    if (!empty($model)) { $eg_product_schema['sku'] = trim(strip_tags($model)); }
+    if (!empty($manufacturer)) { $eg_product_schema['brand'] = array('@type' => 'Brand', 'name' => trim(strip_tags($manufacturer))); }
+    if (!empty($eg_attr_props)) { $eg_product_schema['additionalProperty'] = $eg_attr_props; }
     $eg_product_schema['offers'] = array(
         '@type' => 'Offer',
         'url' => $eg_current_url,
         'priceCurrency' => isset($currency_code) && $currency_code ? $currency_code : 'TRY',
-        'price' => (string)$egeser_schema_price
+        'price' => (string)$egeser_schema_price,
+        'availability' => 'https://schema.org/InStock',
+        'itemCondition' => 'https://schema.org/NewCondition',
+        'seller' => $eg_org_ref
     );
+} else {
+    /* Fiyatsız (proje bazlı) modeller: fiyat istemeyen Service kaydı. */
+    $eg_product_schema['serviceType'] = trim(strip_tags($heading_title));
+    $eg_product_schema['provider'] = $eg_org_ref;
+    $eg_product_schema['areaServed'] = array();
+    foreach (array('İzmir', 'Manisa', 'Aydın', 'Uşak', 'Balıkesir', 'Muğla') as $eg_area) {
+        $eg_product_schema['areaServed'][] = array('@type' => 'AdministrativeArea', 'name' => $eg_area);
+    }
 }
 
 $eg_breadcrumb_schema = array('@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => array());
