@@ -23,6 +23,12 @@
 .eg112-footer--polished .eg112-footer__bottom-inner{min-height:62px}
 .eg112-footer--polished .eg112-footer__legal a,
 .eg112-footer--polished .eg112-footer__legal span{color:#9a9a9a}
+.eg112-footer--polished .eg112-footer__sister{margin-left:10px;padding-left:10px;border-left:1px solid #3a3a3a}
+.eg112-footer--polished .eg112-footer__sister a{color:#9a9a9a;text-decoration:none}
+.eg112-footer--polished .eg112-footer__sister a:hover{color:#f1f1f1}
+@media(max-width:640px){
+  .eg112-footer--polished .eg112-footer__sister{display:block;margin:6px 0 0;padding:0;border:0}
+}
 @media(max-width:920px){
   .eg112-footer--polished .eg112-footer__grid{grid-template-columns:1fr 1fr;gap:38px}
 }
@@ -108,7 +114,7 @@ $eg112_linkedin_footer = 'https://tr.linkedin.com/company/egeser-konteyner-prefa
 
   <div class="eg112-footer__bottom">
     <div class="eg-shell-container eg112-footer__bottom-inner">
-      <span>© <?php echo date('Y'); ?> Egeser Prefabrik. Tüm hakları saklıdır.</span>
+      <span>© <?php echo date('Y'); ?> Egeser Prefabrik. Tüm hakları saklıdır. <span class="eg112-footer__sister">Diğer markamız: <a href="https://www.egeserkonteyner.com/" target="_blank" rel="noopener">Egeser Konteyner</a></span></span>
       <div class="eg112-footer__legal">
         <a href="<?php echo !empty($egeser_url_kvkk) ? $egeser_url_kvkk : '/kvkk-aydinlatma-metni'; ?>">KVKK</a>
         <a href="<?php echo !empty($egeser_url_gizlilik) ? $egeser_url_gizlilik : '/gizlilik-politikasi'; ?>">Gizlilik</a>
