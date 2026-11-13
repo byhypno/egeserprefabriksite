@@ -861,7 +861,7 @@ $eg_wa_href = $eg_wa_phone !== ''
             <div>
               <?php if ($eg_has_real_price) { ?>
                 <strong>Bu model için başlangıç fiyatı</strong>
-                <span>Başlangıç fiyatıdır; KDV, kapsam, nakliye ve montaj koşulları projeye göre netleşir.</span>
+                <span>Başlangıç fiyatıdır; KDV, kapsam ve montaj koşulları projeye göre netleşir. Nakliye teklifle birlikte hesaplanır. Siparişe özel üretildiği için iade kabul edilmez.</span>
               <?php } else { ?>
                 <strong>Bu model için size özel teklif hazırlayalım</strong>
                 <span>Kurulum yeri, teknik kapsam ve opsiyonları birlikte değerlendirelim.</span>
@@ -1174,7 +1174,13 @@ if ($eg_schema_has_offer) {
         'price' => (string)$egeser_schema_price,
         'availability' => 'https://schema.org/InStock',
         'itemCondition' => 'https://schema.org/NewCondition',
-        'seller' => $eg_org_ref
+        'seller' => $eg_org_ref,
+        /* Siparişe özel üretim: iade kabul edilmez (işletme beyanı, 13.11.2026). */
+        'hasMerchantReturnPolicy' => array(
+            '@type' => 'MerchantReturnPolicy',
+            'applicableCountry' => 'TR',
+            'returnPolicyCategory' => 'https://schema.org/MerchantReturnNotPermitted'
+        )
     );
 } else {
     /* Fiyatsız (proje bazlı) modeller: fiyat istemeyen Service kaydı. */
