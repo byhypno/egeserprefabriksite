@@ -1163,8 +1163,9 @@ $eg_product_schema = array(
 if (!empty($eg_image_schema)) { $eg_product_schema['image'] = $eg_image_schema; }
 if ($eg_schema_has_offer) {
     /* Fiyatlı modeller: Product + başlangıç fiyatlı Offer (fiyat sayfada görünür). */
-    if (!empty($model)) { $eg_product_schema['sku'] = trim(strip_tags($model)); }
-    if (!empty($manufacturer)) { $eg_product_schema['brand'] = array('@type' => 'Brand', 'name' => trim(strip_tags($manufacturer))); }
+    if (!empty($model)) { $eg_product_schema['sku'] = trim(strip_tags($model)); $eg_product_schema['mpn'] = trim(strip_tags($model)); }
+    /* Üretici alanı boşsa marka: Egeser Prefabrik (Search Console "gtin, marka" uyarısı için). */
+    $eg_product_schema['brand'] = array('@type' => 'Brand', 'name' => !empty($manufacturer) ? trim(strip_tags($manufacturer)) : 'Egeser Prefabrik');
     if (!empty($eg_attr_props)) { $eg_product_schema['additionalProperty'] = $eg_attr_props; }
     $eg_product_schema['offers'] = array(
         '@type' => 'Offer',
