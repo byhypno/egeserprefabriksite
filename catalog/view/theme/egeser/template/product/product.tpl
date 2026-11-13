@@ -76,7 +76,22 @@ $eg_region_links = array(
     array('name' => 'Muğla', 'href' => '/mugla-prefabrik-ev')
 );
 $eg_form_default_customer_type = $eg_is_corporate ? 'Kurumsal' : 'Bireysel';
-$eg_clean_desc = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags(preg_replace('#<(?:br|/?(?:p|div|li|ul|ol|h[1-6]|tr|td|th|section|article))\b[^>]*>#i', ' ', $description)), ENT_QUOTES, 'UTF-8')));
+/* Açıklamadaki ara başlıklar (h1-h6) özet ve şema metnine karışmasın diye içerikleriyle çıkarılır. */
+$eg_desc_no_headings = preg_replace('#<h[1-6]\b[^>]*>.*?</h[1-6]>#is', ' ', html_entity_decode($description, ENT_QUOTES, 'UTF-8'));
+$eg_clean_desc = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags(preg_replace('#<(?:br|/?(?:p|div|li|ul|ol|h[1-6]|tr|td|th|section|article))\b[^>]*>#i', ' ', $eg_desc_no_headings)), ENT_QUOTES, 'UTF-8')));
+/* Şema açıklaması: cümle sınırında, en fazla ~700 karakter. */
+$eg_schema_desc = $eg_clean_desc;
+if ($eg_clean_desc !== '') {
+    $eg_schema_parts = array();
+    $eg_schema_len = 0;
+    foreach (preg_split('/(?<=[.!?])\s+/u', $eg_clean_desc, -1, PREG_SPLIT_NO_EMPTY) as $eg_s) {
+        $eg_s_len = function_exists('mb_strlen') ? mb_strlen($eg_s, 'UTF-8') : strlen($eg_s);
+        if (!empty($eg_schema_parts) && ($eg_schema_len + $eg_s_len) > 700) { break; }
+        $eg_schema_parts[] = $eg_s;
+        $eg_schema_len += $eg_s_len + 1;
+    }
+    if (!empty($eg_schema_parts)) { $eg_schema_desc = implode(' ', $eg_schema_parts); }
+}
 $eg_short_desc = 'Proje kapsamı, teknik özellikler, üretim, sevkiyat ve montaj seçenekleri ihtiyaca göre birlikte değerlendirilir.';
 if ($eg_clean_desc !== '') {
     $eg_sentences = preg_split('/(?<=[.!?])\s+/u', $eg_clean_desc, -1, PREG_SPLIT_NO_EMPTY);
@@ -1157,7 +1172,7 @@ $eg_product_schema = array(
     '@context' => 'https://schema.org',
     '@type' => $eg_schema_has_offer ? 'Product' : 'Service',
     'name' => trim(strip_tags($heading_title)),
-    'description' => $eg_clean_desc,
+    'description' => $eg_schema_desc,
     'url' => $eg_current_url
 );
 if (!empty($eg_image_schema)) { $eg_product_schema['image'] = $eg_image_schema; }
