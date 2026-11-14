@@ -105,7 +105,9 @@ class ControllerInformationEgeserBlog extends Controller {
             'dateModified' => date('c', strtotime($post['date_modified'])),
             'author' => array(
                 '@type' => 'Organization',
-                'name' => 'Egeser Prefabrik'
+                '@id' => $base . '/#organization',
+                'name' => 'Egeser Prefabrik',
+                'url' => $base . '/'
             ),
             'publisher' => array(
                 '@type' => 'Organization',
