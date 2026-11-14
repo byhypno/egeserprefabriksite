@@ -6,6 +6,18 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 		$store_id = (int)$this->config->get('config_store_id');
 		$urls = array();
 
+		// EGESER - Gorsel sitemap, sitede gosterilen yeniden boyutlanmis (image/cache/...)
+		// adresleri verir; orijinal image/catalog/... dosyalari sayfalarda hic kullanilmadigi
+		// icin Google bunlari sayfayla eslestiremiyordu.
+		$this->load->model('tool/image');
+		$theme = $this->config->get('config_theme');
+		$theme_image = array(
+			'thumb_w' => (int)$this->config->get($theme . '_image_thumb_width') ?: 900,
+			'thumb_h' => (int)$this->config->get($theme . '_image_thumb_height') ?: 675,
+			'popup_w' => (int)$this->config->get($theme . '_image_popup_width') ?: 1600,
+			'popup_h' => (int)$this->config->get($theme . '_image_popup_height') ?: 1200
+		);
+
 		// Ana sayfa
 		$this->addUrl($urls, rtrim($this->config->get('config_url'), '/') . '/', '', 'daily', '1.0');
 
@@ -57,13 +69,16 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 
 			if ($this->isSeoUrl($url)) {
 				// EGESER - Gorsel sitemap: urun ana gorseli + ek gorseller (kat planlari dahil).
+				// Sayfadaki <img> ile ayni boyutlu adresler verilir: ana gorsel sayfadaki
+				// thumb (900x675), ek gorseller sayfada yalniz 160x120 kucuk resim oldugu
+				// icin lightbox'ta acilan buyuk (popup) surum.
 				$images = array();
 				if (!empty($row['image'])) {
-					$images[] = $row['image'];
+					$images[] = array($row['image'], $theme_image['thumb_w'], $theme_image['thumb_h']);
 				}
 				$image_query = $this->db->query("SELECT image FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$row['product_id'] . "' ORDER BY sort_order ASC");
 				foreach ($image_query->rows as $image_row) {
-					$images[] = $image_row['image'];
+					$images[] = array($image_row['image'], $theme_image['popup_w'], $theme_image['popup_h']);
 				}
 
 				$this->addUrl(
@@ -119,11 +134,12 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 					if (empty($project['enabled']) || empty($project['image'])) {
 						continue;
 					}
-					$project_images[] = $project['image'];
+					$project_image = array($project['image'], 640, 640, true);
+					$project_images[] = $project_image;
 					$location = !empty($project['location']) ? mb_strtolower($project['location'], 'UTF-8') : '';
 					foreach ($city_names as $city_slug => $city_name) {
 						if ($location !== '' && mb_strpos($location, mb_strtolower($city_name, 'UTF-8')) !== false) {
-							$city_project_images[$city_slug][] = $project['image'];
+							$city_project_images[$city_slug][] = $project_image;
 						}
 					}
 				}
@@ -236,7 +252,7 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 		}
 
 		foreach ((array)$images as $image) {
-			$image_url = $this->imageUrl($image);
+			$image_url = is_array($image) ? $this->resizedImageUrl($image) : $this->imageUrl($image);
 			if ($image_url !== '' && !in_array($image_url, $urls[$key]['images'], true) && count($urls[$key]['images']) < 1000) {
 				$urls[$key]['images'][] = $image_url;
 			}
@@ -252,6 +268,19 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 		}
 
 		return rtrim($this->config->get('config_url'), '/') . '/image/' . implode('/', array_map('rawurlencode', explode('/', $path)));
+	}
+
+	// EGESER - Sayfada kullanilan image/cache/... adresi (model_tool_image->resize ile ayni).
+	private function resizedImageUrl($spec) {
+		$path = ltrim(str_replace('\\', '/', trim((string)$spec[0])), '/');
+
+		if ($path === '' || !is_file(DIR_IMAGE . $path)) {
+			return '';
+		}
+
+		$url = $this->model_tool_image->resize($path, (int)$spec[1], (int)$spec[2], !empty($spec[3]));
+
+		return $url ? html_entity_decode($url, ENT_QUOTES, 'UTF-8') : $this->imageUrl($path);
 	}
 
 	private function isSeoUrl($url) {
