@@ -832,9 +832,14 @@ $eg_wa_href = $eg_wa_phone !== ''
               <img src="<?php echo $thumb; ?>" alt="<?php echo htmlspecialchars(strip_tags($heading_title), ENT_QUOTES, 'UTF-8'); ?> – dış görünüm, Egeser Prefabrik" loading="lazy">
             </button>
           <?php } ?>
-          <?php $eg_img_no = 1; foreach ($eg_gallery_images as $eg_img) { $eg_img_no++; ?>
+          <?php
+          /* Kat planı küçük resimlerinin alt metni "görsel N" yerine plan adını taşır (görsel aramada "ev planı" sorguları). */
+          $eg_plan_labels_by_thumb = array();
+          foreach ($eg_floor_plans as $eg_fp) { if (!empty($eg_fp['thumb'])) { $eg_plan_labels_by_thumb[$eg_fp['thumb']] = $eg_fp['eg_plan_label']; } }
+          ?>
+          <?php $eg_img_no = 1; foreach ($eg_gallery_images as $eg_img) { $eg_img_no++; $eg_thumb_label = isset($eg_plan_labels_by_thumb[$eg_img['thumb']]) ? $eg_plan_labels_by_thumb[$eg_img['thumb']] : 'görsel ' . $eg_img_no; ?>
             <button type="button" class="eg11-thumb" data-src="<?php echo $eg_img['thumb']; ?>" data-popup="<?php echo $eg_img['popup']; ?>">
-              <img src="<?php echo $eg_img['thumb']; ?>" alt="<?php echo htmlspecialchars(strip_tags($heading_title), ENT_QUOTES, 'UTF-8'); ?> – görsel <?php echo $eg_img_no; ?>, Egeser Prefabrik" loading="lazy">
+              <img src="<?php echo $eg_img['thumb']; ?>" alt="<?php echo htmlspecialchars(strip_tags($heading_title) . ' – ' . $eg_thumb_label . ', Egeser Prefabrik', ENT_QUOTES, 'UTF-8'); ?>" loading="lazy">
             </button>
           <?php } ?>
         </div>
