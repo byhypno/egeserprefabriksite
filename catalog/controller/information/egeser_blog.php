@@ -121,6 +121,10 @@ class ControllerInformationEgeserBlog extends Controller {
         $data['schema'] = $schema;
         $data['breadcrumb_schema'] = $this->breadcrumbSchema($data['breadcrumbs']);
 
+        // EGESER - Yazida "Sik sorulan sorular" basligi varsa altindaki H3 soru + paragraf cevaplardan
+        // FAQPage semasi uretilir; editore <script> yapistirmaya gerek kalmaz.
+        $data['faq_schema'] = $this->faqSchema($data['description']);
+
         $data['related_posts'] = array();
 
         foreach ($this->model_catalog_egeser_blog->getRelatedPosts($blog_id, 3) as $related) {
@@ -164,6 +168,35 @@ class ControllerInformationEgeserBlog extends Controller {
         }, $content);
 
         return $content;
+    }
+
+    private function faqSchema($content) {
+        if (!preg_match('/<h2\b[^>]*>\s*S(?:ı|i|I)k sorulan sorular\s*<\/h2>(.*?)(?=<h2\b|$)/isu', $content, $section)) {
+            return array();
+        }
+
+        preg_match_all('/<h3\b[^>]*>(.*?)<\/h3>(.*?)(?=<h3\b|$)/isu', $section[1], $pairs, PREG_SET_ORDER);
+
+        $questions = array();
+
+        foreach ($pairs as $pair) {
+            $question = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags($pair[1]), ENT_QUOTES, 'UTF-8')));
+            $answer = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags(preg_replace('/<\/(p|li)>/i', ' ', $pair[2])), ENT_QUOTES, 'UTF-8')));
+
+            if ($question !== '' && $answer !== '') {
+                $questions[] = array(
+                    '@type' => 'Question',
+                    'name' => $question,
+                    'acceptedAnswer' => array('@type' => 'Answer', 'text' => $answer)
+                );
+            }
+        }
+
+        if (count($questions) < 2) {
+            return array();
+        }
+
+        return array('@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => $questions);
     }
 
     private function plainText($html) {
