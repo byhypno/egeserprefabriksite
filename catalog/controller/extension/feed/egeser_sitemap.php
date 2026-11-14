@@ -197,7 +197,7 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 				!empty($row['date_modified']) ? $row['date_modified'] : '',
 				'monthly',
 				'0.7',
-				!empty($row['image']) ? array(ltrim($row['image'], '/')) : array()
+				!empty($row['image']) ? array(array(ltrim($row['image'], '/'), 900, 900)) : array()
 			);
 		}
 
