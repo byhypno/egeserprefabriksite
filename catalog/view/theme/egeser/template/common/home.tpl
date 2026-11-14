@@ -745,7 +745,8 @@
   background-size:cover;
   background-position:center;
 }
-.eh12 .eh16-model-card__visual.has-image:after{
+.eh12 .eh16-model-card__img{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.eh12 .eh16-model-card__visual.has-image:after{z-index:1;
   content:"";
   position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(18,18,18,.03),rgba(18,18,18,.18));
@@ -1429,6 +1430,11 @@ $eh16_tek_placeholder  = 'image/catalog/egeser/home/tek-katli-placeholder.jpg';
 $eh16_cift_placeholder = 'image/catalog/egeser/home/cift-katli-placeholder.jpg';
 $eh16_tek_img  = !empty($egeser_home_tek_image)  ? $egeser_home_tek_image  : $eh16_tek_placeholder;
 $eh16_cift_img = !empty($egeser_home_cift_image) ? $egeser_home_cift_image : $eh16_cift_placeholder;
+/* Model kart görselleri gerçek <img> olarak basılır (Google Görseller CSS arka planını indekslemez). */
+$eh16_abs = function ($path) {
+  if ($path === '' || preg_match('#^https?://#i', $path)) { return $path; }
+  return (defined('HTTPS_SERVER') && HTTPS_SERVER ? rtrim(HTTPS_SERVER, '/') : '') . '/' . ltrim($path, '/');
+};
 
 
 $eh13_base = '';
@@ -1819,7 +1825,8 @@ if (defined('DB_HOSTNAME') && defined('DB_USERNAME') && defined('DB_PASSWORD') &
     </div>
     <div class="eh13-category-grid">
       <article class="eh13-category-card eh16-model-card">
-        <div class="eh16-model-card__visual<?php echo $eh16_tek_img ? ' has-image' : ''; ?>"<?php if ($eh16_tek_img) { ?> style="background-image:url('<?php echo htmlspecialchars($eh16_tek_img, ENT_QUOTES, 'UTF-8'); ?>')"<?php } ?>>
+        <div class="eh16-model-card__visual<?php echo $eh16_tek_img ? ' has-image' : ''; ?>">
+          <?php if ($eh16_tek_img) { ?><img class="eh16-model-card__img" src="<?php echo htmlspecialchars($eh16_abs($eh16_tek_img), ENT_QUOTES, 'UTF-8'); ?>" alt="Tek katlı prefabrik ev modeli dış görünüm | Egeser Prefabrik" width="1200" height="520" loading="lazy" decoding="async"><?php } ?>
           <span>TEK KATLI YAŞAM</span>
         </div>
         <div class="eh16-model-card__body">
@@ -1830,7 +1837,8 @@ if (defined('DB_HOSTNAME') && defined('DB_USERNAME') && defined('DB_PASSWORD') &
         <a href="<?php echo htmlspecialchars($eh13_url_tek, ENT_QUOTES, 'UTF-8'); ?>" aria-label="Tek katlı modelleri incele"><span>Tek katlı modelleri incele →</span></a>
       </article>
       <article class="eh13-category-card eh16-model-card">
-        <div class="eh16-model-card__visual eh16-model-card__visual--cift<?php echo $eh16_cift_img ? ' has-image' : ''; ?>"<?php if ($eh16_cift_img) { ?> style="background-image:url('<?php echo htmlspecialchars($eh16_cift_img, ENT_QUOTES, 'UTF-8'); ?>')"<?php } ?>>
+        <div class="eh16-model-card__visual eh16-model-card__visual--cift<?php echo $eh16_cift_img ? ' has-image' : ''; ?>">
+          <?php if ($eh16_cift_img) { ?><img class="eh16-model-card__img" src="<?php echo htmlspecialchars($eh16_abs($eh16_cift_img), ENT_QUOTES, 'UTF-8'); ?>" alt="Çift katlı (dubleks) prefabrik ev modeli dış görünüm | Egeser Prefabrik" width="1200" height="520" loading="lazy" decoding="async"><?php } ?>
           <span>ÇİFT KATLI YAŞAM</span>
         </div>
         <div class="eh16-model-card__body">

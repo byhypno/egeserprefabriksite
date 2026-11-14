@@ -19,7 +19,27 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 		);
 
 		// Ana sayfa
-		$this->addUrl($urls, rtrim($this->config->get('config_url'), '/') . '/', '', 'daily', '1.0');
+		// EGESER - Ana sayfa gorselleri: hero slider (960x960, sayfadaki surum) + model kartlari.
+		// Slider'in 2. ve sonraki gorselleri JavaScript ile yuklendigi icin sitemap ile bildirilir.
+		$home_images = array();
+		$slider_query = $this->db->query("SELECT setting FROM " . DB_PREFIX . "module WHERE code = 'egeser_hero_slider'");
+		foreach ($slider_query->rows as $slider_row) {
+			$slider_setting = json_decode($slider_row['setting'], true);
+			if (empty($slider_setting['status']) || empty($slider_setting['slides']) || !is_array($slider_setting['slides'])) {
+				continue;
+			}
+			foreach ($slider_setting['slides'] as $slide) {
+				if (!empty($slide['enabled']) && !empty($slide['image'])) {
+					$home_images[] = array($slide['image'], 960, 960);
+				}
+			}
+		}
+		foreach (array('catalog/egeser/home/tek-katli-placeholder.jpg', 'catalog/egeser/home/cift-katli-placeholder.jpg') as $card_image) {
+			if (is_file(DIR_IMAGE . $card_image)) {
+				$home_images[] = $card_image;
+			}
+		}
+		$this->addUrl($urls, rtrim($this->config->get('config_url'), '/') . '/', '', 'daily', '1.0', $home_images);
 
 		// Kategoriler
 		$category_query = $this->db->query("
