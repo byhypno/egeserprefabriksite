@@ -26,6 +26,10 @@
 .eg112-footer--polished .eg112-footer__sister{margin-left:10px;padding-left:10px;border-left:1px solid #3a3a3a}
 .eg112-footer--polished .eg112-footer__sister a{color:#c9c9c9;text-decoration:underline;text-underline-offset:2px}
 .eg112-footer--polished .eg112-footer__sister a:hover{color:#f1f1f1}
+.eg112-footer--polished .eg112-footer__company{display:flex;flex-wrap:wrap;gap:4px 14px;padding-bottom:88px;font-style:normal;font-size:11.5px;line-height:1.55;color:#8f8f8f}
+.eg112-footer--polished .eg112-footer__company strong{color:#b5b5b5;font-weight:700}
+.eg112-footer--polished .eg112-footer__company a{color:#b5b5b5;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:640px){.eg112-footer--polished address.eg112-footer__company{padding-right:72px!important}}
 @media(max-width:640px){
   .eg112-footer--polished .eg112-footer__sister{display:block;margin:6px 0 0;padding:0;border:0}
 }
@@ -122,6 +126,13 @@ $eg112_linkedin_footer = 'https://tr.linkedin.com/company/egeser-konteyner-prefa
         <a href="#" data-eg-consent-reopen>Çerez Tercihleri</a>
       </div>
     </div>
+    <address class="eg-shell-container eg112-footer__company">
+      <strong>Egeser Konteyner Prefabrik Sanayi ve Ticaret Limited Şirketi</strong>
+      <span>MERSİS No: 0325096208000001</span>
+      <span>Ticaret Sicil No: 208625</span>
+      <span>Çambel Mah. 1558 Sk. No: 28 İç Kapı No: 1 Kemalpaşa / İzmir</span>
+      <span><a href="mailto:web@egeserprefabrik.com.tr">web@egeserprefabrik.com.tr</a></span>
+    </address>
   </div>
 </footer>
 
