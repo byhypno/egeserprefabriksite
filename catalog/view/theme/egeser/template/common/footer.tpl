@@ -24,7 +24,7 @@
 .eg112-footer--polished .eg112-footer__legal a,
 .eg112-footer--polished .eg112-footer__legal span{color:#9a9a9a}
 .eg112-footer--polished .eg112-footer__sister{margin-left:10px;padding-left:10px;border-left:1px solid #3a3a3a}
-.eg112-footer--polished .eg112-footer__sister a{color:#9a9a9a;text-decoration:none}
+.eg112-footer--polished .eg112-footer__sister a{color:#c9c9c9;text-decoration:underline;text-underline-offset:2px}
 .eg112-footer--polished .eg112-footer__sister a:hover{color:#f1f1f1}
 @media(max-width:640px){
   .eg112-footer--polished .eg112-footer__sister{display:block;margin:6px 0 0;padding:0;border:0}
