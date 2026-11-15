@@ -76,3 +76,8 @@ $_['action_event'] = array(
 	//'controller/*/before'                 => 'event/debug/before',
 	//'controller/*/after'                  => 'event/debug/after'
 );
+
+// EGESER - Urun fiyatlari veritabaninda KDV HARIC tutulur; sitede KDV DAHIL gosterilir (Fiyat Etiketi Yonetmeligi).
+// Oran veya fiyat listesi degisirse yalnizca bu iki satir guncellenir.
+$_['egeser_kdv_rate']   = 20;
+$_['egeser_price_date'] = '15.11.2026';

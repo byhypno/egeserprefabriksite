@@ -34,6 +34,17 @@
     }
   }
 
+  /* Google Maps iframe'leri: çerez onayı varsa veya ziyaretçi "Haritayı göster"e basarsa yüklenir. */
+  function loadMaps() {
+    var frames = document.querySelectorAll('iframe[data-eg-map-src]');
+    for (var i = 0; i < frames.length; i++) {
+      frames[i].src = frames[i].getAttribute('data-eg-map-src');
+      frames[i].removeAttribute('data-eg-map-src');
+    }
+    var btns = document.querySelectorAll('[data-eg-map-load]');
+    for (var b = 0; b < btns.length; b++) { btns[b].parentNode.removeChild(btns[b]); }
+  }
+
   function hideBanner() {
     var el = document.getElementById('eg-consent-banner');
     if (el) { el.classList.remove('is-visible'); }
@@ -49,6 +60,7 @@
 
     if (choice === 'granted') {
       activateGatedScripts();
+      loadMaps();
     } else if (choice !== 'denied') {
       showBanner();
     }
@@ -60,6 +72,7 @@
       acceptBtn.addEventListener('click', function () {
         setCookie(COOKIE_NAME, 'granted');
         activateGatedScripts();
+        loadMaps();
         hideBanner();
       });
     }
@@ -68,6 +81,11 @@
         setCookie(COOKIE_NAME, 'denied');
         hideBanner();
       });
+    }
+
+    var mapBtns = document.querySelectorAll('[data-eg-map-load]');
+    for (var m = 0; m < mapBtns.length; m++) {
+      mapBtns[m].addEventListener('click', loadMaps);
     }
 
     var reopenLinks = document.querySelectorAll('[data-eg-consent-reopen]');

@@ -422,10 +422,15 @@ class ControllerProductProduct extends Controller {
 			// EGESER - Product schema icin locale'den bagimsiz sayisal fiyat.
 			$data['currency_code'] = !empty($this->session->data['currency']) ? $this->session->data['currency'] : $this->config->get('config_currency');
 			$data['egeser_schema_price'] = '';
+			$data['egeser_price_net'] = 0;
+			$data['egeser_kdv_rate'] = (int)$this->config->get('egeser_kdv_rate');
+			$data['egeser_price_date'] = (string)$this->config->get('egeser_price_date');
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$egeser_schema_base_price = (float)$product_info['special'] ? (float)$product_info['special'] : (float)$product_info['price'];
 				if ($egeser_schema_base_price > 0) {
-					$egeser_schema_taxed = $this->tax->calculate($egeser_schema_base_price, $product_info['tax_class_id'], $this->config->get('config_tax'));
+					// Veritabanindaki fiyat KDV haric; gosterim ve sema KDV dahil (system/config/catalog.php).
+					$data['egeser_price_net'] = $egeser_schema_base_price;
+					$egeser_schema_taxed = $egeser_schema_base_price * (1 + (float)$this->config->get('egeser_kdv_rate') / 100);
 					$egeser_schema_amount = $this->currency->format($egeser_schema_taxed, $data['currency_code'], '', false);
 					$data['egeser_schema_price'] = number_format((float)$egeser_schema_amount, 2, '.', '');
 				}

@@ -42,6 +42,13 @@ class EgeserVisitorTracker {
             return null;
         }
 
+        // KVKK/çerez onayı: ziyaretçi "Kabul Et" demediyse çerez yazılmaz, kayıt tutulmaz;
+        // önceden yazılmış takip çerezleri de silinir.
+        if (!$this->hasConsent()) {
+            $this->clearTrackingCookies();
+            return null;
+        }
+
         try {
             EgeserVisitorSchema::install($this->db);
 
@@ -80,7 +87,7 @@ class EgeserVisitorTracker {
      * demektir, spam/bot ihtimali yuksektir).
      */
     public function trackClientEvent($event_type, array $data = array()) {
-        if ($this->isBot()) {
+        if ($this->isBot() || !$this->hasConsent()) {
             return false;
         }
 
@@ -128,7 +135,7 @@ class EgeserVisitorTracker {
      * visitor/session eslestirmesi icin cagrilir.
      */
     public function attachLead($lead_id) {
-        if ($this->isBot()) {
+        if ($this->isBot() || !$this->hasConsent()) {
             return;
         }
 
@@ -471,6 +478,22 @@ class EgeserVisitorTracker {
         }
 
         return isset($_COOKIE[$name]) ? (string)$_COOKIE[$name] : '';
+    }
+
+    /**
+     * Çerez bandında "Kabul Et" seçilmiş mi? (egeser-consent.js: egeser_consent=granted)
+     */
+    public function hasConsent() {
+        return isset($_COOKIE['egeser_consent']) && $_COOKIE['egeser_consent'] === 'granted';
+    }
+
+    private function clearTrackingCookies() {
+        foreach (array(self::COOKIE_VISITOR, self::COOKIE_SESSION) as $name) {
+            if (isset($_COOKIE[$name])) {
+                $this->setCookie($name, '', -3600);
+                unset($_COOKIE[$name]);
+            }
+        }
     }
 
     private function setCookie($name, $value, $ttl) {

@@ -162,13 +162,14 @@
         <div class="egc-map" aria-label="Egeser Prefabrik Kemalpaşa İzmir haritası">
           <iframe
             title="Egeser Prefabrik Showroom - Kemalpaşa/İzmir konumu"
-            src="https://www.google.com/maps?q=38.44988554328141,27.497831062110418&amp;z=18&amp;output=embed"
+            data-eg-map-src="https://www.google.com/maps?q=38.44988554328141,27.497831062110418&amp;z=18&amp;output=embed"
             width="600"
             height="450"
             style="border:0"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             allowfullscreen></iframe>
+        <button type="button" class="eg-map-consent" data-eg-map-load><strong>Haritayı göster</strong><span>Harita Google tarafından sunulur. Yüklendiğinde Google'a veri aktarılır.</span></button>
           <div class="egc-map__caption">
             <span>Kemalpaşa / İzmir</span>
             <strong>Showroom / Satış Ofisi</strong>

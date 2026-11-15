@@ -52,3 +52,11 @@
 @media (max-width: 480px) {
   #eg-consent-banner { left: 10px; right: 10px; bottom: 10px; padding: 16px; }
 }
+
+/* Onay bekleyen Google Maps alanı */
+.eh17-map,.egc-map{position:relative}
+.eg-map-consent{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;padding:24px;border:0;background:#f4efe8;color:#2b2522;font:inherit;text-align:center;cursor:pointer}
+.eg-map-consent strong{display:inline-block;padding:12px 20px;border-radius:999px;background:#ef1b23;color:#fff;font-size:14px;font-weight:800}
+.eg-map-consent span{max-width:320px;color:#5f5752;font-size:12px;line-height:1.5}
+.eg-map-consent:hover strong,.eg-map-consent:focus-visible strong{background:#c9141b}
+

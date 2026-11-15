@@ -328,7 +328,7 @@ $eg_cat_css_version = is_file($eg_cat_css_path) ? filemtime($eg_cat_css_path) : 
             <h3><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h3>
             <?php if ($product['description']) { ?><p><?php echo $product['description']; ?></p><?php } ?>
             <?php if (!empty($product['egeser_start_price'])) { ?>
-            <div class="eg-v18-price-note eg-v18-price-note--start"><span>BAŞLANGIÇ FİYATI</span><strong><?php echo $product['egeser_start_price']; ?>'den başlayan fiyatlarla</strong></div>
+            <div class="eg-v18-price-note eg-v18-price-note--start"><span>BAŞLANGIÇ FİYATI</span><strong><?php echo $product['egeser_start_price']; ?>'den başlayan fiyatlarla <small>(KDV dahil)</small></strong></div>
             <?php } else { ?>
             <div class="eg-v18-price-note"><span>PROJE BAZLI</span><strong>Fiyat / teklif için iletişime geçin</strong></div>
             <?php } ?>

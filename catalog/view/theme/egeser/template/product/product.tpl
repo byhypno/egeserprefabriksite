@@ -452,6 +452,7 @@ $eg_wa_href = $eg_wa_phone !== ''
 .eg-v11 .eg11-quote-card__top strong{font-size:19px;line-height:1.25}
 .eg-v11 .eg11-quote-card__top span{display:block;margin-top:4px;color:#c9c9c9;font-size:12px;line-height:1.5}
 .eg-v11 .eg11-price{font-size:27px;font-weight:900;color:#fff;text-align:right;white-space:nowrap;line-height:1.15}
+.eg-v11 .eg11-price__net{display:block;margin-top:4px;font-size:11px;font-weight:600;color:#c9c9c9}
 .eg-v11 .eg11-actions{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:9px;margin-top:16px}
 .eg-v11 .eg11-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:11px 14px;border-radius:11px;border:1px solid transparent;font-size:13px;font-weight:900;transition:.2s ease}
 .eg-v11 .eg11-btn:hover{transform:translateY(-1px)}
@@ -881,14 +882,14 @@ $eg_wa_href = $eg_wa_phone !== ''
             <div>
               <?php if ($eg_has_real_price) { ?>
                 <strong>Bu model için başlangıç fiyatı</strong>
-                <span>Başlangıç fiyatıdır; KDV, kapsam ve montaj koşulları projeye göre netleşir. Nakliye teklifle birlikte hesaplanır. Siparişe özel üretildiği için iade kabul edilmez.</span>
+                <span>KDV dahil başlangıç fiyatıdır<?php echo !empty($egeser_price_date) ? ' (' . htmlspecialchars($egeser_price_date, ENT_QUOTES, 'UTF-8') . ' itibarıyla)' : ''; ?>. Kapsam ve montaj koşulları projeye göre netleşir; nakliye teklifle birlikte hesaplanır. Siparişe özel üretilen yapılarda cayma hakkı kullanılamaz; ayıplı mala ilişkin yasal haklarınız saklıdır.</span>
               <?php } else { ?>
                 <strong>Bu model için size özel teklif hazırlayalım</strong>
                 <span>Kurulum yeri, teknik kapsam ve opsiyonları birlikte değerlendirelim.</span>
               <?php } ?>
             </div>
             <?php if ($eg_has_real_price) { ?>
-              <div class="eg11-price"><?php echo $eg_price_display; ?></div>
+              <div class="eg11-price"><?php echo $eg_price_display; ?><?php if (!empty($egeser_price_net)) { ?><small class="eg11-price__net">KDV hariç <?php echo number_format((float)$egeser_price_net, 0, ',', '.'); ?> ₺ + %<?php echo (int)$egeser_kdv_rate; ?> KDV</small><?php } ?></div>
             <?php } ?>
           </div>
 
@@ -1108,7 +1109,7 @@ $eg_wa_href = $eg_wa_phone !== ''
       if ($eg_has_real_price && $eg_price_display !== '') {
           $eg_faq_items[] = array(
               'q' => $eg_faq_name . ' fiyatı ne kadar?',
-              'a' => 'Bu modelin başlangıç fiyatı ' . $eg_price_display . '. KDV, teknik kapsam ve montaj koşulları projeye göre netleşir; nakliye teklifle birlikte hesaplanır. Siparişe özel üretildiği için iade kabul edilmez.'
+              'a' => 'Bu modelin KDV dahil başlangıç fiyatı ' . $eg_price_display . (!empty($egeser_price_date) ? ' (' . $egeser_price_date . ' itibarıyla)' : '') . '. Teknik kapsam ve montaj koşulları projeye göre netleşir; nakliye teklifle birlikte hesaplanır.'
           );
       } else {
           $eg_faq_items[] = array(
