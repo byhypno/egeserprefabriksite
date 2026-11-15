@@ -34,7 +34,9 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 				}
 			}
 		}
-		foreach (array('catalog/egeser/home/tek-katli-placeholder.jpg', 'catalog/egeser/home/cift-katli-placeholder.jpg') as $card_image) {
+		// Model kartlari: yeni (aciklayici) dosya adi varsa o, yoksa eski placeholder dosyasi (home.tpl ile ayni kural).
+		foreach (array('catalog/egeser/home/tek-katli-prefabrik-ev-modeli.jpg' => 'catalog/egeser/home/tek-katli-placeholder.jpg', 'catalog/egeser/home/dubleks-prefabrik-ev-modeli.jpg' => 'catalog/egeser/home/cift-katli-placeholder.jpg') as $card_new => $card_old) {
+			$card_image = is_file(DIR_IMAGE . $card_new) ? $card_new : $card_old;
 			if (is_file(DIR_IMAGE . $card_image)) {
 				$home_images[] = $card_image;
 			}

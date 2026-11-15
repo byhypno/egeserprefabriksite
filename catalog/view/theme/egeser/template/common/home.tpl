@@ -1426,8 +1426,10 @@ $eh17_email = 'web@egeserprefabrik.com.tr';
 $eh17_email_href = 'mailto:' . $eh17_email;
 $eh17_maps_href = 'https://www.google.com/maps?q=38.44988554328141,27.497831062110418';
 
-$eh16_tek_placeholder  = 'image/catalog/egeser/home/tek-katli-placeholder.jpg';
-$eh16_cift_placeholder = 'image/catalog/egeser/home/cift-katli-placeholder.jpg';
+/* Model kart görselleri: açıklayıcı adlı dosya sunucuda varsa o, yoksa eski placeholder dosyası kullanılır. */
+$eh16_pick = function ($new, $old) { return (defined('DIR_IMAGE') && is_file(DIR_IMAGE . $new)) ? 'image/' . $new : 'image/' . $old; };
+$eh16_tek_placeholder  = $eh16_pick('catalog/egeser/home/tek-katli-prefabrik-ev-modeli.jpg', 'catalog/egeser/home/tek-katli-placeholder.jpg');
+$eh16_cift_placeholder = $eh16_pick('catalog/egeser/home/dubleks-prefabrik-ev-modeli.jpg', 'catalog/egeser/home/cift-katli-placeholder.jpg');
 $eh16_tek_img  = !empty($egeser_home_tek_image)  ? $egeser_home_tek_image  : $eh16_tek_placeholder;
 $eh16_cift_img = !empty($egeser_home_cift_image) ? $egeser_home_cift_image : $eh16_cift_placeholder;
 /* Model kart görselleri gerçek <img> olarak basılır (Google Görseller CSS arka planını indekslemez). */
