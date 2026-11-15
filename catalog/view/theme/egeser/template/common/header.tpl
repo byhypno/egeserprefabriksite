@@ -414,11 +414,13 @@ body{padding-top:0!important}
   right:24px;
   bottom:24px;
   z-index:9995;
+  pointer-events:none; /* görünmez etiket alanı alttaki linkleri örtmesin; yalnızca ikonlar tıklanır */
   display:flex;
   flex-direction:column;
   align-items:flex-end;
   gap:14px;
 }
+.eg17-float-wa__icon{pointer-events:auto}
 .eg17-float-wa{
   display:flex;
   align-items:center;
