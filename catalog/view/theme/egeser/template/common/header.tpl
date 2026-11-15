@@ -13,7 +13,7 @@
 <meta property="og:type" content="<?php echo !empty($egeser_og_type) ? htmlspecialchars($egeser_og_type, ENT_QUOTES, 'UTF-8') : 'website'; ?>" />
 <meta property="og:site_name" content="Egeser Prefabrik" />
 <?php if (!empty($egeser_og_image)) { ?><meta property="og:image" content="<?php echo htmlspecialchars($egeser_og_image, ENT_QUOTES, 'UTF-8'); ?>" /><?php } ?>
-<meta name="twitter:card" content="summary" />
+<meta name="twitter:card" content="summary_large_image" />
 <?php if (!empty($egeser_og_title)) { ?><meta name="twitter:title" content="<?php echo htmlspecialchars($egeser_og_title, ENT_QUOTES, 'UTF-8'); ?>" /><?php } ?>
 <?php if (!empty($egeser_og_description)) { ?><meta name="twitter:description" content="<?php echo htmlspecialchars($egeser_og_description, ENT_QUOTES, 'UTF-8'); ?>" /><?php } ?>
 <?php if (!empty($egeser_og_image)) { ?><meta name="twitter:image" content="<?php echo htmlspecialchars($egeser_og_image, ENT_QUOTES, 'UTF-8'); ?>" /><?php } ?>

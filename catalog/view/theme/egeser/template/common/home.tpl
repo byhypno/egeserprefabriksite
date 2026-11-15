@@ -2181,15 +2181,21 @@ if (defined('DB_HOSTNAME') && defined('DB_USERNAME') && defined('DB_PASSWORD') &
       <div><span class="eh12-label">SIK SORULANLAR</span><h2>Prefabrik yapılar hakkında merak edilenler.</h2></div>
       <p>Satın alma ve proje öncesinde en sık karşılaşılan temel sorular.</p>
     </div>
+    <?php
+$eh_faq_items = array(
+  array('q' => 'Prefabrik ev fiyatları nasıl hesaplanır?', 'a' => 'Fiyat; m², kat sayısı, plan, teknik özellikler, iç donanım, sevkiyat mesafesi, saha koşulları ve montaj kapsamına göre proje bazında belirlenir.'),
+  array('q' => 'Prefabrik ev planında değişiklik yapılabilir mi?', 'a' => 'Plan değişikliği; taşıyıcı sistem, üretim ve tesisat koşulları birlikte değerlendirilerek proje aşamasında netleştirilebilir.'),
+  array('q' => 'Prefabrik ev için ruhsat gerekir mi?', 'a' => 'Ruhsat ve imar gereklilikleri arsanın bulunduğu yere ve projenin niteliğine göre değişebilir. Uygulama öncesinde ilgili belediye ve yetkili kurumlarla güncel koşulların doğrulanması gerekir.'),
+  array('q' => 'Prefabrik ev kurulumu ne kadar sürer?', 'a' => 'Süre; yapının büyüklüğü, proje kapsamı, üretim planı, saha hazırlığı ve montaj koşullarına göre değişir. Net süre teklif ve proje aşamasında belirlenir.'),
+  array('q' => 'Prefabrik evde ısı ve ses yalıtımı nasıl planlanır?', 'a' => 'Yalıtım performansı; duvar ve çatı sistemi, kullanılan katmanlar, doğrama ve uygulama detaylarının birlikte değerlendirilmesiyle şekillenir.'),
+  array('q' => 'Prefabrik yapı hangi zemine kurulur?', 'a' => 'Uygun temel ve zemin hazırlığı proje ve saha koşullarına göre belirlenir. Kurulum öncesinde erişim, kot, drenaj ve temel gereksinimleri değerlendirilmelidir.'),
+  array('q' => 'Kurumsal projeler özel ölçüde hazırlanabilir mi?', 'a' => 'Ofis, yatakhane, yemekhane, şantiye ve sosyal tesis yapılarında kullanım amacı, kapasite ve saha ihtiyaçlarına göre özel proje çalışması yapılabilir.'),
+  array('q' => 'Sevkiyat ve montaj hizmeti veriliyor mu?', 'a' => 'Projenin kapsamı ve kurulum bölgesine göre üretim, sevkiyat ve montaj süreçleri birlikte planlanabilir.'),
+);
+?>
     <div class="eh12-faq">
-      <details><summary>Prefabrik ev fiyatları nasıl hesaplanır?</summary><p>Fiyat; m², kat sayısı, plan, teknik özellikler, iç donanım, sevkiyat mesafesi, saha koşulları ve montaj kapsamına göre proje bazında belirlenir.</p></details>
-      <details><summary>Prefabrik ev planında değişiklik yapılabilir mi?</summary><p>Plan değişikliği; taşıyıcı sistem, üretim ve tesisat koşulları birlikte değerlendirilerek proje aşamasında netleştirilebilir.</p></details>
-      <details><summary>Prefabrik ev için ruhsat gerekir mi?</summary><p>Ruhsat ve imar gereklilikleri arsanın bulunduğu yere ve projenin niteliğine göre değişebilir. Uygulama öncesinde ilgili belediye ve yetkili kurumlarla güncel koşulların doğrulanması gerekir.</p></details>
-      <details><summary>Prefabrik ev kurulumu ne kadar sürer?</summary><p>Süre; yapının büyüklüğü, proje kapsamı, üretim planı, saha hazırlığı ve montaj koşullarına göre değişir. Net süre teklif ve proje aşamasında belirlenir.</p></details>
-      <details><summary>Prefabrik evde ısı ve ses yalıtımı nasıl planlanır?</summary><p>Yalıtım performansı; duvar ve çatı sistemi, kullanılan katmanlar, doğrama ve uygulama detaylarının birlikte değerlendirilmesiyle şekillenir.</p></details>
-      <details><summary>Prefabrik yapı hangi zemine kurulur?</summary><p>Uygun temel ve zemin hazırlığı proje ve saha koşullarına göre belirlenir. Kurulum öncesinde erişim, kot, drenaj ve temel gereksinimleri değerlendirilmelidir.</p></details>
-      <details><summary>Kurumsal projeler özel ölçüde hazırlanabilir mi?</summary><p>Ofis, yatakhane, yemekhane, şantiye ve sosyal tesis yapılarında kullanım amacı, kapasite ve saha ihtiyaçlarına göre özel proje çalışması yapılabilir.</p></details>
-      <details><summary>Sevkiyat ve montaj hizmeti veriliyor mu?</summary><p>Projenin kapsamı ve kurulum bölgesine göre üretim, sevkiyat ve montaj süreçleri birlikte planlanabilir.</p></details>
+      <?php foreach ($eh_faq_items as $eh_faq_item) { ?><details><summary><?php echo $eh_faq_item['q']; ?></summary><p><?php echo $eh_faq_item['a']; ?></p></details>
+      <?php } ?>
     </div>
     <p style="margin:18px 0 0"><a href="/sss" style="font-weight:800;font-size:13px;color:#181818;text-decoration:none;border-bottom:2px solid var(--eh12-red);padding-bottom:2px">Tüm soruları görüntüleyin →</a></p>
   </div>
@@ -2197,16 +2203,12 @@ if (defined('DB_HOSTNAME') && defined('DB_USERNAME') && defined('DB_PASSWORD') &
 
 
 <script type="application/ld+json"><?php
-echo json_encode(array(
-  '@context' => 'https://schema.org',
-  '@type' => 'FAQPage',
-  'mainEntity' => array(
-    array('@type'=>'Question','name'=>'Prefabrik ev fiyatları nasıl hesaplanır?','acceptedAnswer'=>array('@type'=>'Answer','text'=>'Fiyat; m², kat sayısı, plan, teknik özellikler, iç donanım, sevkiyat mesafesi, saha koşulları ve montaj kapsamına göre proje bazında belirlenir.')),
-    array('@type'=>'Question','name'=>'Prefabrik ev planında değişiklik yapılabilir mi?','acceptedAnswer'=>array('@type'=>'Answer','text'=>'Plan değişikliği; taşıyıcı sistem, üretim ve tesisat koşulları birlikte değerlendirilerek proje aşamasında netleştirilebilir.')),
-    array('@type'=>'Question','name'=>'Prefabrik ev için ruhsat gerekir mi?','acceptedAnswer'=>array('@type'=>'Answer','text'=>'Ruhsat ve imar gereklilikleri arsanın bulunduğu yere ve projenin niteliğine göre değişebilir. Uygulama öncesinde ilgili belediye ve yetkili kurumlarla güncel koşulların doğrulanması gerekir.')),
-    array('@type'=>'Question','name'=>'Prefabrik ev kurulumu ne kadar sürer?','acceptedAnswer'=>array('@type'=>'Answer','text'=>'Süre; yapının büyüklüğü, proje kapsamı, üretim planı, saha hazırlığı ve montaj koşullarına göre değişir. Net süre teklif ve proje aşamasında belirlenir.'))
-  )
-), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+/* SSS şeması, sayfada görünen sorularla birebir aynı listeden üretilir. */
+$eh_faq_schema = array('@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => array());
+foreach ($eh_faq_items as $eh_faq_item) {
+  $eh_faq_schema['mainEntity'][] = array('@type' => 'Question', 'name' => strip_tags($eh_faq_item['q']), 'acceptedAnswer' => array('@type' => 'Answer', 'text' => strip_tags($eh_faq_item['a'])));
+}
+echo json_encode($eh_faq_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG);
 ?></script>
 
 <section class="eh12-section" id="eg-lead">

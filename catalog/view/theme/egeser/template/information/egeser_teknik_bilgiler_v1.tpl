@@ -167,7 +167,7 @@
       </div>
       <div class="et1-grid3">
         <article class="et1-card"><span class="num">01</span><h3>Taşıyıcı Sistem</h3><p>Yapının yüklerini güvenli biçimde aktaran ana sistemdir. Kesitler ve bağlantı detayları proje boyutu, kullanım amacı ve statik ihtiyaçlara göre belirlenir.</p></article>
-        <article class="et1-card"><span class="num">02</span><h3>Modüler Üretim Mantığı</h3><p>Üretim aşamalarının kontrollü ortamda yürütülmesi; saha montajında hız, tekrar edilebilirlik ve kalite kontrol avantajı sağlar.</p></article>
+        <article class="et1-card"><span class="num">02</span><h3>Fabrikada Kontrollü Üretim</h3><p>Üretim aşamalarının kontrollü ortamda yürütülmesi; saha montajında hız, tekrar edilebilirlik ve kalite kontrol avantajı sağlar.</p></article>
         <article class="et1-card"><span class="num">03</span><h3>Proje Uyumu</h3><p>Mimari plan, teknik sistemler, kullanım senaryosu ve saha koşulları birbirinden bağımsız değerlendirilmemelidir.</p></article>
       </div>
     </section>

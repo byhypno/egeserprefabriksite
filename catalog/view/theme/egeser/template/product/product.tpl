@@ -1094,12 +1094,57 @@ $eg_wa_href = $eg_wa_phone !== ''
         <div><span class="eg11-label">SIK SORULAN SORULAR</span><h2><?php echo $heading_title; ?> hakkında merak edilenler.</h2></div>
         <p>Teklif öncesinde en çok sorulan başlıkları kısa ve net yanıtlarla topladık.</p>
       </div>
+      <?php
+      /* SSS: model tipine, alanına ve fiyatına göre değişir (50 sayfada aynı metin tekrarlanmasın). */
+      $eg_faq_name = trim(strip_tags(html_entity_decode($heading_title, ENT_QUOTES, 'UTF-8')));
+      $eg_faq_title_lc = function_exists('mb_strtolower') ? mb_strtolower($eg_faq_name, 'UTF-8') : strtolower($eg_faq_name);
+      $eg_faq_is_duplex = (strpos($eg_faq_title_lc, 'dubleks') !== false || strpos($eg_faq_title_lc, 'çift kat') !== false || strpos($eg_faq_title_lc, '2 katlı') !== false);
+      $eg_faq_area = $eg_area !== '' ? $eg_area : '';
+      $eg_faq_items = array();
+      $eg_faq_items[] = array(
+          'q' => $eg_faq_name . ' planı değiştirilebilir mi?',
+          'a' => 'Evet, ' . ($eg_faq_area !== '' ? $eg_faq_area . ' plan esas alınarak ' : '') . 'oda dağılımı, ıslak hacimler ve cephe açıklıkları proje aşamasında değerlendirilebilir. Değişiklikler taşıyıcı sistem, tesisat ve üretim koşulları birlikte incelenerek netleştirilir.'
+      );
+      if ($eg_has_real_price && $eg_price_display !== '') {
+          $eg_faq_items[] = array(
+              'q' => $eg_faq_name . ' fiyatı ne kadar?',
+              'a' => 'Bu modelin başlangıç fiyatı ' . $eg_price_display . '. KDV, teknik kapsam ve montaj koşulları projeye göre netleşir; nakliye teklifle birlikte hesaplanır. Siparişe özel üretildiği için iade kabul edilmez.'
+          );
+      } else {
+          $eg_faq_items[] = array(
+              'q' => $eg_faq_name . ' fiyatını hangi unsurlar etkiler?',
+              'a' => ($eg_faq_area !== '' ? 'Toplam ' . $eg_faq_area . ' alan, ' : 'Toplam alan, ') . 'kullanım amacı, bölüm sayısı, teknik kapsam, kurulum bölgesi, sevkiyat ve montaj koşulları fiyatı belirler. Bu model için fiyat proje bazında hazırlanır.'
+          );
+      }
+      if ($eg_is_corporate) {
+          $eg_faq_items[] = array(
+              'q' => 'Bu yapı kullanım kapasitesine göre büyütülebilir mi?',
+              'a' => 'Kurumsal prefabrik yapılarda kullanıcı sayısı, bölüm ihtiyacı ve saha ölçüleri birlikte değerlendirilir. Yapı, kapasiteye göre farklı ölçülerde projelendirilebilir; kesin yerleşim teklif aşamasında çıkarılır.'
+          );
+      } elseif ($eg_faq_is_duplex) {
+          $eg_faq_items[] = array(
+              'q' => 'Dubleks prefabrik ev için imar durumunda nelere bakılmalı?',
+              'a' => 'İki katlı bir yapı için arsanın imar durumunda izin verilen kat adedi, bina yüksekliği, taban alanı ve çekme mesafeleri kontrol edilmelidir. Ayrıntılar için ruhsat rehberimize bakabilirsiniz.'
+          );
+      } else {
+          $eg_faq_items[] = array(
+              'q' => 'Tek katlı prefabrik ev için arsada nelere bakılmalı?',
+              'a' => ($eg_faq_area !== '' ? $eg_faq_area . ' bir tek katlı yapı için ' : 'Tek katlı bir yapı için ') . 'imar durumundaki taban alanı (TAKS) ve komşu parsellere çekme mesafeleri belirleyicidir. Ayrıntılar için ruhsat rehberimize bakabilirsiniz.'
+          );
+      }
+      $eg_faq_items[] = array(
+          'q' => 'Teklif almak için hangi bilgiler gerekli?',
+          'a' => 'Kullanım amacı, kurulum yapılacak il ve ilçe, ' . ($eg_is_corporate ? 'tahmini kullanıcı sayısı' : 'tercih edilen oda düzeni') . ' ve iletişim bilgileriniz ilk değerlendirme için yeterlidir. Arsanızın imar durum belgesi varsa eklemeniz süreci hızlandırır.'
+      );
+      $eg_faq_items[] = array(
+          'q' => 'Sevkiyat ve montaj nasıl planlanır?',
+          'a' => 'Yapı Kemalpaşa\'daki tesisimizde üretilir; sevkiyat ve montaj planı proje lokasyonu, saha erişimi ve uygulama programına göre teklif aşamasında netleştirilir.'
+      );
+      ?>
       <div class="eg11-faq">
-        <details><summary>Bu modelin planı değiştirilebilir mi?</summary><p>Plan değişikliği; taşıyıcı sistem, tesisat, cephe ve üretim koşulları birlikte değerlendirilerek proje aşamasında netleştirilir.</p></details>
-        <details><summary>Bu modelin fiyatını hangi unsurlar etkiler?</summary><p>Toplam alan, plan, teknik kapsam, kurulum bölgesi, sevkiyat, montaj koşulları ve özel talepler fiyat üzerinde etkili olabilir.</p></details>
-        <details><summary>Prefabrik yapı için zemin hazırlığı gerekir mi?</summary><p>Yapı oturum alanı ve zemin hazırlığı proje ve saha koşullarına göre belirlenir. Uygulama öncesinde saha uygunluğunun değerlendirilmesi gerekir.</p></details>
-        <details><summary>Teklif almak için hangi bilgiler gerekli?</summary><p>Kullanım amacı, yaklaşık m², tercih edilen oda/bölüm yapısı, kurulum lokasyonu ve iletişim bilgileri ilk değerlendirme için yeterlidir.</p></details>
-        <details><summary>Sevkiyat ve montaj süreci nasıl belirlenir?</summary><p>Üretim kapsamı, proje lokasyonu, saha erişimi ve uygulama programına göre sevkiyat ve montaj planı teklif aşamasında netleştirilir.</p></details>
+        <?php foreach ($eg_faq_items as $eg_faq_item) { ?>
+        <details><summary><?php echo htmlspecialchars($eg_faq_item['q'], ENT_QUOTES, 'UTF-8'); ?></summary><p><?php echo htmlspecialchars($eg_faq_item['a'], ENT_QUOTES, 'UTF-8'); ?><?php if (strpos($eg_faq_item['a'], 'ruhsat rehberimize') !== false) { ?> <a href="/blog/ruhsat-ve-izin-sureci-nasil-isler">Ruhsat rehberi →</a><?php } ?></p></details>
+        <?php } ?>
       </div>
     </section>
 
@@ -1207,8 +1252,8 @@ if ($eg_schema_has_offer) {
     $eg_product_schema['serviceType'] = trim(strip_tags($heading_title));
     $eg_product_schema['provider'] = $eg_org_ref;
     $eg_product_schema['areaServed'] = array();
-    foreach (array('İzmir', 'Manisa', 'Aydın', 'Uşak', 'Balıkesir', 'Muğla') as $eg_area) {
-        $eg_product_schema['areaServed'][] = array('@type' => 'AdministrativeArea', 'name' => $eg_area);
+    foreach (array('İzmir', 'Manisa', 'Aydın', 'Uşak', 'Balıkesir', 'Muğla') as $eg_area_name) {
+        $eg_product_schema['areaServed'][] = array('@type' => 'AdministrativeArea', 'name' => $eg_area_name);
     }
 }
 
@@ -1218,17 +1263,6 @@ foreach ($breadcrumbs as $eg_bc) {
     $eg_breadcrumb_schema['itemListElement'][] = array('@type' => 'ListItem', 'position' => $eg_pos++, 'name' => trim(strip_tags($eg_bc['text'])), 'item' => $eg_bc['href']);
 }
 
-$eg_faq_schema = array(
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => array(
-        array('@type'=>'Question','name'=>'Bu modelin planı değiştirilebilir mi?','acceptedAnswer'=>array('@type'=>'Answer','text'=>'Plan değişikliği; taşıyıcı sistem, tesisat, cephe ve üretim koşulları birlikte değerlendirilerek proje aşamasında netleştirilir.')),
-        array('@type'=>'Question','name'=>'Bu modelin fiyatını hangi unsurlar etkiler?','acceptedAnswer'=>array('@type'=>'Answer','text'=>'Toplam alan, plan, teknik kapsam, kurulum bölgesi, sevkiyat, montaj koşulları ve özel talepler fiyat üzerinde etkili olabilir.')),
-        array('@type'=>'Question','name'=>'Prefabrik yapı için zemin hazırlığı gerekir mi?','acceptedAnswer'=>array('@type'=>'Answer','text'=>'Yapı oturum alanı ve zemin hazırlığı proje ve saha koşullarına göre belirlenir. Uygulama öncesinde saha uygunluğunun değerlendirilmesi gerekir.')),
-        array('@type'=>'Question','name'=>'Teklif almak için hangi bilgiler gerekli?','acceptedAnswer'=>array('@type'=>'Answer','text'=>'Kullanım amacı, yaklaşık m², tercih edilen oda/bölüm yapısı, kurulum lokasyonu ve iletişim bilgileri ilk değerlendirme için yeterlidir.')),
-        array('@type'=>'Question','name'=>'Sevkiyat ve montaj süreci nasıl belirlenir?','acceptedAnswer'=>array('@type'=>'Answer','text'=>'Üretim kapsamı, proje lokasyonu, saha erişimi ve uygulama programına göre sevkiyat ve montaj planı teklif aşamasında netleştirilir.'))
-    )
-);
 ?>
 
 <script>
@@ -1344,6 +1378,5 @@ $eg_faq_schema = array(
 
 <script type="application/ld+json"><?php echo json_encode($eg_product_schema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?></script>
 <script type="application/ld+json"><?php echo json_encode($eg_breadcrumb_schema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?></script>
-<script type="application/ld+json"><?php echo json_encode($eg_faq_schema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?></script>
 
 <?php echo $footer; ?>
