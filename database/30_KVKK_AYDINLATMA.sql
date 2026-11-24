@@ -18,6 +18,7 @@ UPDATE oc_information_description SET description = '&lt;p&gt;&lt;em&gt;Son gün
 &lt;li&gt;&lt;strong&gt;Adres:&lt;/strong&gt; Çambel Mah. 1558 Sk. No: 28 İç Kapı No: 1 Kemalpaşa / İzmir&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;E-posta:&lt;/strong&gt; web@egeserprefabrik.com.tr&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Telefon:&lt;/strong&gt; 0531 886 60 90&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;KEP Adresi:&lt;/strong&gt; egeserprefabrik@hs01.kep.tr&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Hangi Verileri, Hangi Yolla ve Hangi Hukuki Sebeple İşliyoruz?&lt;/h2&gt;
 &lt;div style=&quot;overflow-x:auto;-webkit-overflow-scrolling:touch&quot;&gt;&lt;table border=&quot;1&quot; cellpadding=&quot;8&quot; style=&quot;border-collapse:collapse;width:100%;min-width:560px&quot;&gt;
@@ -53,7 +54,7 @@ UPDATE oc_information_description SET description = '&lt;p&gt;&lt;em&gt;Son gün
 &lt;h2&gt;İlgili Kişinin Hakları&lt;/h2&gt;
 &lt;p&gt;KVKK''nın 11. maddesi uyarınca kişisel verilerinize ilişkin; işlenip işlenmediğini öğrenme, işlenmişse buna ilişkin bilgi talep etme, işlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme, eksik veya yanlış işlenmişse düzeltilmesini isteme, işlenmesini gerektiren sebeplerin ortadan kalkması hâlinde silinmesini veya yok edilmesini isteme, bu işlemlerin aktarılan üçüncü kişilere bildirilmesini isteme, işlenen verilerin münhasıran otomatik sistemlerle analiz edilmesi suretiyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme ve kanuna aykırı işlenmesi sebebiyle zarara uğramanız hâlinde zararın giderilmesini talep etme haklarına sahipsiniz.&lt;/p&gt;
 &lt;h2&gt;Başvuru Yöntemi&lt;/h2&gt;
-&lt;p&gt;Haklarınıza ilişkin talebinizi; kimliğinizi tespit edici bilgilerle birlikte, yukarıdaki adresimize ıslak imzalı dilekçeyle şahsen veya posta yoluyla, güvenli elektronik imza ya da mobil imza ile imzalayarak veya daha önce bize bildirdiğiniz ve sistemimizde kayıtlı e-posta adresinizden &lt;strong&gt;web@egeserprefabrik.com.tr&lt;/strong&gt; adresine iletebilirsiniz.&lt;/p&gt;
+&lt;p&gt;Haklarınıza ilişkin talebinizi; kimliğinizi tespit edici bilgilerle birlikte, yukarıdaki adresimize ıslak imzalı dilekçeyle şahsen veya posta yoluyla, kayıtlı elektronik posta (KEP) ile &lt;strong&gt;egeserprefabrik@hs01.kep.tr&lt;/strong&gt; adresine, güvenli elektronik imza ya da mobil imza ile imzalayarak veya daha önce bize bildirdiğiniz ve sistemimizde kayıtlı e-posta adresinizden &lt;strong&gt;web@egeserprefabrik.com.tr&lt;/strong&gt; adresine iletebilirsiniz.&lt;/p&gt;
 &lt;p&gt;Talebiniz, niteliğine göre en kısa sürede ve en geç 30 gün içinde ücretsiz olarak sonuçlandırılır. İşlemin ayrıca bir maliyet gerektirmesi hâlinde, Kişisel Verileri Koruma Kurulunca belirlenen tarifedeki ücret alınabilir. Başvurunuzun reddedilmesi, verilen cevabı yetersiz bulmanız veya süresinde cevap verilmemesi hâlinde Kişisel Verileri Koruma Kurulu''na şikâyette bulunabilirsiniz.&lt;/p&gt;' WHERE information_id = 12;
 
 -- KONTROL: guncellenen = 1
