@@ -64,13 +64,13 @@ $eg112_linkedin_footer = 'https://tr.linkedin.com/company/egeser-konteyner-prefa
         </div>
         <div class="eg112-footer__social" aria-label="Sosyal medya hesaplarımız">
           <a class="eg112-social-link eg112-social-link--instagram" href="<?php echo htmlspecialchars($eg112_instagram_footer, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" aria-label="Egeser Prefabrik Instagram" title="Instagram">
-            <i class="fa fa-instagram" aria-hidden="true"></i><span>Instagram</span>
+            <svg class="eg112-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg><span>Instagram</span>
           </a>
           <a class="eg112-social-link eg112-social-link--facebook" href="<?php echo htmlspecialchars($eg112_facebook_footer, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" aria-label="Egeser Prefabrik Facebook" title="Facebook">
-            <i class="fa fa-facebook" aria-hidden="true"></i><span>Facebook</span>
+            <svg class="eg112-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg><span>Facebook</span>
           </a>
           <a class="eg112-social-link eg112-social-link--linkedin" href="<?php echo htmlspecialchars($eg112_linkedin_footer, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" aria-label="Egeser Prefabrik LinkedIn" title="LinkedIn">
-            <i class="fa fa-linkedin" aria-hidden="true"></i><span>LinkedIn</span>
+            <svg class="eg112-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" focusable="false"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span>LinkedIn</span>
           </a>
         </div>
       </div>
@@ -179,7 +179,7 @@ $eg112_linkedin_footer = 'https://tr.linkedin.com/company/egeser-konteyner-prefa
 </script>
 
 <!-- V5 tek grid dosyasi sayfa ici stillerden sonra yuklenir. -->
-<link href="catalog/view/theme/egeser/stylesheet/egeser-layout-v5.css?v=20260918-5" rel="stylesheet" />
+<link href="catalog/view/theme/egeser/stylesheet/egeser-layout-v5.css?v=20261124-1" rel="stylesheet" />
 
 <div id="eg-consent-banner" role="dialog" aria-label="Çerez tercihleri">
   <p>Sitemizde deneyimi iyileştirmek ve ziyaret istatistiklerini ölçmek için çerezler kullanıyoruz. Detaylar için <a href="<?php echo !empty($egeser_url_cerez) ? $egeser_url_cerez : '/cerez-politikasi'; ?>" target="_blank" rel="noopener noreferrer">Çerez Politikası</a> sayfamıza bakabilirsiniz.</p>

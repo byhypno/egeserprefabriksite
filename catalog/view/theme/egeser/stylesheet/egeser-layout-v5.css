@@ -42,6 +42,23 @@
   text-align:center;
 }
 
+/* Font Awesome kaldirildi (20261124): sosyal simgeler satir ici SVG */
+.eg112-footer__social .eg112-social-link .eg112-social-icon{
+  width:15px;
+  height:15px;
+  flex:none;
+  display:block;
+}
+
+/* Varsayilan temadan gelen sayfalarda (404, site haritasi vb.) breadcrumb ev simgesi */
+.breadcrumb .fa-home{
+  display:inline-block;
+  width:14px;
+  height:14px;
+  vertical-align:-2px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23777'%3E%3Cpath d='M12 2.5 1.5 11.2l1.3 1.5L4.5 11.3V21h6v-6h3v6h6v-9.7l1.7 1.4 1.3-1.5z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
 .eg112-footer__social .eg112-social-link:hover{
   color:#fff!important;
   transform:translateY(-2px);

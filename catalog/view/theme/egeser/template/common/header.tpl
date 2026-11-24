@@ -43,7 +43,6 @@ $egv = function ($path) { $file = dirname(DIR_APPLICATION) . '/' . ltrim(preg_re
 <script src="<?php echo $egv('catalog/view/javascript/jquery/jquery-2.1.1.min.js'); ?>" type="text/javascript" defer></script>
 <link href="<?php echo $egv('catalog/view/javascript/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet" media="screen">
 <script src="<?php echo $egv('catalog/view/javascript/bootstrap/js/bootstrap.min.js'); ?>" type="text/javascript" defer></script>
-<link href="<?php echo $egv('catalog/view/javascript/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo $egv('catalog/view/theme/default/stylesheet/stylesheet.css'); ?>" rel="stylesheet">
 
 <?php foreach ($styles as $style) { ?>
