@@ -61,10 +61,17 @@
 .eh12 .eh12-hero__meta{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:22px;color:#696a6d;font-size:11px;font-weight:700}
 .eh12 .eh12-hero__meta span{display:inline-flex;align-items:center;gap:6px}
 .eh12 .eh12-hero__meta i{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:#edf7f4;color:#0f8f7f;font-style:normal;font-size:10px}
+/* Hero kanıt şeridi: puan, başlangıç fiyatı, hizmet bölgesi */
+.eh12 .eh12-hero__proof{display:flex;flex-wrap:wrap;gap:12px 34px;margin:0 0 24px;padding:0}
+.eh12 .eh12-hero__proof div{margin:0}
+.eh12 .eh12-hero__proof dt{margin:0;color:var(--eh12-ink);font-size:24px;line-height:1.1;font-weight:900;letter-spacing:-.02em;white-space:nowrap}
+.eh12 .eh12-hero__proof dd{margin:3px 0 0;color:#696a6d;font-size:12px;font-weight:600}
+.eh12 .eh12-hero__stars{color:#f1a323;font-size:18px;letter-spacing:1px;vertical-align:2px}
+@media(max-width:700px){.eh12 .eh12-hero__proof{display:grid;grid-template-columns:auto auto auto;justify-content:space-between;gap:10px;margin:22px 0 0}.eh12 .eh12-hero__proof dt{font-size:17px}.eh12 .eh12-hero__stars{font-size:12px;letter-spacing:0;vertical-align:1px}.eh12 .eh12-hero__proof dd{font-size:11px}}
 /* Masaüstü: sol metin bloğu sağdaki görselle üstten ve alttan hizalı */
 @media(min-width:1101px){
  .eh12 .eh12-hero__grid{align-items:stretch}
- .eh12 .eh12-hero__copy{display:flex;flex-direction:column;justify-content:space-between;padding:0 0 4px}
+ .eh12 .eh12-hero__copy{display:flex;flex-direction:column;justify-content:space-between;gap:24px;padding:0 0 4px}
  .eh12 .eh12-hero__head h1{margin-bottom:0;font-size:clamp(58px,4.9vw,76px)}
  .eh12 .eh12-hero__copy .eh12-hero__lead{font-size:19px}
  .eh12 .eh12-hero__foot .eh12-hero__actions{margin-top:0}
@@ -1619,6 +1626,11 @@ unset($eh13_graph_item);
       <p class="eh12-hero__lead">Tek katlı ve çift katlı prefabrik evlerden ofis, yatakhane, yemekhane, şantiye ve özel proje yapılarına kadar; projelendirme, üretim, sevkiyat ve montaj süreçlerini tek merkezden planlıyoruz.</p>
 
       <div class="eh12-hero__foot">
+      <dl class="eh12-hero__proof">
+        <div><dt><span class="eh12-hero__stars" aria-hidden="true">★★★★★</span> 4,7</dt><dd>250 Google yorumu</dd></div>
+        <?php if (!empty($egeser_min_price)) { ?><div><dt><?php echo $egeser_min_price; ?> TL'den</dt><dd>KDV dahil başlangıç</dd></div><?php } ?>
+        <div><dt>6 il</dt><dd>Ege'de kurulum</dd></div>
+      </dl>
       <div class="eh12-hero__actions">
         <a class="eh12-btn eh12-btn--red" href="<?php echo htmlspecialchars($eh13_url_ev_modelleri, ENT_QUOTES, 'UTF-8'); ?>">Prefabrik Ev Modellerini İncele</a>
         <a class="eh12-btn eh12-btn--ghost" href="#eg-lead">Projem İçin Teklif Al</a>
