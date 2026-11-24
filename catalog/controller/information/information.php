@@ -39,6 +39,7 @@ class ControllerInformationInformation extends Controller {
 			$data['heading_title'] = $information_info['title'];
 
 			// EGESER - Bilgi sayfasi WebPage schema verileri.
+			$data['egeser_information_id'] = (int)$information_id;
 			$data['egeser_schema_type'] = 'WebPage';
 			if ($information_id === 7) {
 				$data['egeser_schema_type'] = 'AboutPage';
