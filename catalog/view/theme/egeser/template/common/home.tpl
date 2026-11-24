@@ -455,6 +455,7 @@
   position:relative;
 }
 .eh12 .eh12-hero h1 span:after{
+  display:none; /* "İzmir" artık H1'in ilk satırında; alt çizgi ikinci satırın üstüne biniyordu */
   content:"";
   position:absolute;
   left:2px;right:12%;bottom:-7px;
