@@ -1604,7 +1604,7 @@ unset($eh13_graph_item);
   <div class="eh12-container eh12-hero__grid">
     <div>
       <span class="eh12-label">İZMİR MERKEZLİ PREFABRİK YAPI ÜRETİMİ</span>
-      <h1>Prefabrik Ev ve Yapı Çözümleri <span>İzmir &amp; Ege Bölgesi.</span></h1>
+      <h1><span>İzmir</span> Prefabrik Ev ve Yapı Çözümleri.</h1>
       <p class="eh12-hero__lead">Tek katlı ve çift katlı prefabrik evlerden ofis, yatakhane, yemekhane, şantiye ve özel proje yapılarına kadar; projelendirme, üretim, sevkiyat ve montaj süreçlerini tek merkezden planlıyoruz.</p>
 
       <div class="eh12-hero__actions">

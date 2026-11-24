@@ -37,7 +37,7 @@
     <section class="ecity-hero">
       <div class="ecity-hero__copy">
         <span class="ecity-kicker"><?php echo htmlspecialchars($city['region'], ENT_QUOTES, 'UTF-8'); ?></span>
-        <h1><?php echo htmlspecialchars($city['name'], ENT_QUOTES, 'UTF-8'); ?> Prefabrik Ev ve Yapı Çözümleri</h1>
+        <h1><?php echo htmlspecialchars(!empty($city['h1']) ? $city['h1'] : $city['name'] . ' Prefabrik Ev ve Yapı Çözümleri', ENT_QUOTES, 'UTF-8'); ?></h1>
         <p><?php echo htmlspecialchars($city['lead'], ENT_QUOTES, 'UTF-8'); ?></p>
         <div class="ecity-actions">
           <a class="ecity-btn ecity-btn--red" href="<?php echo htmlspecialchars($contact_url, ENT_QUOTES, 'UTF-8'); ?>">Projeniz İçin Teklif Al</a>
