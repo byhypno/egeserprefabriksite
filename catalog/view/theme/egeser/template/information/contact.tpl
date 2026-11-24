@@ -125,7 +125,7 @@
           <div class="egc-location__details">
             <article>
               <small>SHOWROOM / SATIŞ OFİSİ</small>
-              <strong>Irmak Depoları yanı, Çambel Ankara Cad. 35. Km, Kemalpaşa / İzmir</strong>
+              <strong>Çambel, Ankara Asfaltı Cd. Irmak Depoları Yanı, 35730 Kemalpaşa / İzmir</strong>
               <span>Ziyaret ve proje görüşmeleri · <a class="egc-maplink" href="https://www.google.com/maps?q=38.44988554328141,27.497831062110418" target="_blank" rel="noopener">Konumu aç →</a></span>
             </article>
             <article>

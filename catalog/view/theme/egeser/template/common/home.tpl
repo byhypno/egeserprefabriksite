@@ -1528,7 +1528,8 @@ $eh13_schema = array(
             'sameAs' => $eh13_same_as,
             'address' => array(
                 '@type' => 'PostalAddress',
-                'streetAddress' => 'Irmak Depoları yanı, Çambel Ankara Caddesi 35. Km',
+                'streetAddress' => 'Çambel, Ankara Asfaltı Cd. Irmak Depoları Yanı',
+                'postalCode' => '35730',
                 'addressLocality' => 'Kemalpaşa',
                 'addressRegion' => 'İzmir',
                 'addressCountry' => 'TR'
@@ -1654,7 +1655,7 @@ unset($eh13_graph_item);
     <div class="eh12-stats__item"><span class="eh12-stats__num" data-eh12-count="8" data-eh12-suffix="+">8+</span><span class="eh12-stats__label">Yıllık Tecrübe<br>(2018'den beri)</span></div>
     <div class="eh12-stats__item"><span class="eh12-stats__num" data-eh12-count="42" data-eh12-suffix=" M²">42 M²</span><span class="eh12-stats__label">Ortalama Günlük<br>Prefabrik Yapı Üretimi</span></div>
     <div class="eh12-stats__item"><span class="eh12-stats__num" data-eh12-count="4" data-eh12-suffix="+">4+</span><span class="eh12-stats__label">Aylık Prefabrik Ev<br>Kurulumu (min. 80 m²)</span></div>
-    <div class="eh12-stats__item"><span class="eh12-stats__num" data-eh12-count="233" data-eh12-suffix="+">233+</span><span class="eh12-stats__label">Google<br>Değerlendirmesi</span></div>
+    <div class="eh12-stats__item"><span class="eh12-stats__num" data-eh12-count="250" data-eh12-suffix="">250</span><span class="eh12-stats__label">Google<br>Değerlendirmesi</span></div>
   </div>
 </section>
 <script>
@@ -2248,7 +2249,7 @@ echo json_encode($eh_faq_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
         <div class="eh17-location__details">
           <article>
             <small>SHOWROOM / SATIŞ OFİSİ</small>
-            <strong>Irmak Depoları yanı, Çambel Ankara Cad. 35. Km, Kemalpaşa / İzmir</strong>
+            <strong>Çambel, Ankara Asfaltı Cd. Irmak Depoları Yanı, 35730 Kemalpaşa / İzmir</strong>
             <span>Ziyaret ve proje görüşmeleri · <a class="eh17-maplink" href="https://www.google.com/maps?q=38.44988554328141,27.497831062110418" target="_blank" rel="noopener">Konumu aç →</a></span>
           </article>
           <article>
