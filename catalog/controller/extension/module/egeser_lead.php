@@ -88,7 +88,7 @@ class ControllerExtensionModuleEgeserLead extends Controller {
         if (utf8_strlen($name) < 2 || utf8_strlen($name) > 80) $errors[] = 'Ad Soyad alanını kontrol edin.';
         $digits = preg_replace('/\D+/', '', $phone);
         if (strlen($digits) < 10 || strlen($digits) > 15) $errors[] = 'Telefon numarasını kontrol edin.';
-        if (!$consent) $errors[] = 'İletişim onayı zorunludur.';
+        if (!$consent) $errors[] = 'Göndermek için KVKK Aydınlatma Metni\'ni okuduğunuzu onaylayın.';
 
         if ($customer_type === 'Kurumsal') {
             if (utf8_strlen($company) < 2 || utf8_strlen($company) > 150) $errors[] = 'Firma ünvanını girin.';

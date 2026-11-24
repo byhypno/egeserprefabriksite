@@ -308,7 +308,7 @@ class ControllerInformationContact extends Controller {
 		}
 
 		if (!isset($this->request->post['kvkk']) || (string)$this->request->post['kvkk'] !== '1') {
-			$this->error['kvkk'] = 'Devam etmek için iletişim bilgilerinizin işlenmesini kabul etmeniz gerekir.';
+			$this->error['kvkk'] = 'Göndermek için KVKK Aydınlatma Metni\'ni okuduğunuzu onaylayın.';
 		}
 
 		// Captcha
