@@ -61,6 +61,14 @@
 .eh12 .eh12-hero__meta{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:22px;color:#696a6d;font-size:11px;font-weight:700}
 .eh12 .eh12-hero__meta span{display:inline-flex;align-items:center;gap:6px}
 .eh12 .eh12-hero__meta i{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:#edf7f4;color:#0f8f7f;font-style:normal;font-size:10px}
+/* Masaüstü: sol metin bloğu sağdaki görselle üstten ve alttan hizalı */
+@media(min-width:1101px){
+ .eh12 .eh12-hero__grid{align-items:stretch}
+ .eh12 .eh12-hero__copy{display:flex;flex-direction:column;justify-content:space-between;padding:0 0 4px}
+ .eh12 .eh12-hero__head h1{margin-bottom:0;font-size:clamp(58px,4.9vw,76px)}
+ .eh12 .eh12-hero__copy .eh12-hero__lead{font-size:19px}
+ .eh12 .eh12-hero__foot .eh12-hero__actions{margin-top:0}
+}
 .eh12 .eh12-hero-media{position:relative;overflow:hidden;min-height:520px;border-radius:28px;background:#efefec;box-shadow:0 28px 80px rgba(20,20,20,.10)}
 .eh12 .eh12-hero-media img{position:absolute;inset:0;display:block;width:100%;height:100%;min-height:520px;object-fit:cover}
 .eh12 .eh12-hero-media__placeholder{min-height:560px;display:grid;place-items:center;background:
@@ -1603,11 +1611,14 @@ unset($eh13_graph_item);
 
 <section class="eh12-hero">
   <div class="eh12-container eh12-hero__grid">
-    <div>
+    <div class="eh12-hero__copy">
+      <div class="eh12-hero__head">
       <span class="eh12-label">İZMİR MERKEZLİ PREFABRİK YAPI ÜRETİMİ</span>
       <h1><span>İzmir</span> Prefabrik Ev ve Yapı Çözümleri.</h1>
+      </div>
       <p class="eh12-hero__lead">Tek katlı ve çift katlı prefabrik evlerden ofis, yatakhane, yemekhane, şantiye ve özel proje yapılarına kadar; projelendirme, üretim, sevkiyat ve montaj süreçlerini tek merkezden planlıyoruz.</p>
 
+      <div class="eh12-hero__foot">
       <div class="eh12-hero__actions">
         <a class="eh12-btn eh12-btn--red" href="<?php echo htmlspecialchars($eh13_url_ev_modelleri, ENT_QUOTES, 'UTF-8'); ?>">Prefabrik Ev Modellerini İncele</a>
         <a class="eh12-btn eh12-btn--ghost" href="#eg-lead">Projem İçin Teklif Al</a>
@@ -1618,6 +1629,7 @@ unset($eh13_graph_item);
         <span><i>✓</i>Proje desteği</span>
         <span><i>✓</i>Profesyonel montaj</span>
         <span><i>✓</i>Satış sonrası iletişim</span>
+      </div>
       </div>
     </div>
 
