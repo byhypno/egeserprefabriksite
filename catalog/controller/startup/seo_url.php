@@ -47,6 +47,14 @@ class ControllerStartupSeoUrl extends Controller {
 						$egeser_redirect_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "egeser_redirect WHERE source_hash='" . $this->db->escape($egeser_redirect_hash) . "' LIMIT 1");
 						if ($egeser_redirect_query->num_rows) $egeser_redirect_rule = $egeser_redirect_query->row;
 					}
+					// Eski adres ?tag= gibi baska bir parametreyle gelirse: parametresiz yol ile bir kez daha ara.
+					if (!$egeser_redirect_rule) {
+						$egeser_redirect_path = (string)parse_url($egeser_redirect_source, PHP_URL_PATH);
+						if ($egeser_redirect_path !== '' && $egeser_redirect_path !== '/' && $egeser_redirect_path !== $egeser_redirect_source && stripos($egeser_redirect_path, 'index.php') === false) {
+							$egeser_redirect_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "egeser_redirect WHERE source_hash='" . $this->db->escape(sha1($egeser_redirect_path)) . "' LIMIT 1");
+							if ($egeser_redirect_query->num_rows) $egeser_redirect_rule = $egeser_redirect_query->row;
+						}
+					}
 				}
 			}
 
