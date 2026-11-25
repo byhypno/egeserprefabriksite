@@ -100,7 +100,13 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 				}
 				$image_query = $this->db->query("SELECT image FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$row['product_id'] . "' ORDER BY sort_order ASC");
 				foreach ($image_query->rows as $image_row) {
-					$images[] = array($image_row['image'], $theme_image['popup_w'], $theme_image['popup_h']);
+					// Kat planlari sayfada buyutulmeden, asil dosya adresiyle gosterilir (product.tpl);
+					// sitemap de ayni adresi verir ki Google gorseli sayfayla eslestirsin.
+					if ($this->isPlanImage($image_row['image'])) {
+						$images[] = $image_row['image'];
+					} else {
+						$images[] = array($image_row['image'], $theme_image['popup_w'], $theme_image['popup_h']);
+					}
 				}
 
 				$this->addUrl(
@@ -279,6 +285,18 @@ class ControllerExtensionFeedEgeserSitemap extends Controller {
 				$urls[$key]['images'][] = $image_url;
 			}
 		}
+	}
+
+	// EGESER - product.tpl'deki kat plani tanima kurallariyla ayni.
+	private function isPlanImage($path) {
+		$p = function_exists('mb_strtolower') ? mb_strtolower((string)$path, 'UTF-8') : strtolower((string)$path);
+		$p = '/' . ltrim(str_replace('\\', '/', $p), '/');
+		foreach (array('kat-plan', 'kat_plani', 'katplani', 'floor-plan', 'floorplan', 'ground-floor', 'ground_floor', 'first-floor', 'first_floor', 'second-floor', 'second_floor', '/plan') as $needle) {
+			if (strpos($p, $needle) !== false) {
+				return true;
+			}
+		}
+		return (bool)preg_match('#-plan(?:-\d+)?\.(?:jpe?g|png|webp|gif)$#', $p);
 	}
 
 	// EGESER - image/ altindaki dosyanin tam adresi; dosya yoksa bos doner.
