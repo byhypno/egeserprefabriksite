@@ -444,7 +444,7 @@ $eg_wa_href = $eg_wa_phone !== ''
 .eg-v11 .eg11-media-badge{position:absolute;left:20px;top:20px;z-index:2;padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);font-size:11px;font-weight:800;letter-spacing:.06em;color:#333}
 .eg-v11 .eg11-media-zoom{position:absolute;right:18px;bottom:18px;width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:50%;background:rgba(20,20,20,.82);color:#fff;cursor:pointer}
 .eg-v11 .eg11-thumbs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:12px}
-.eg-v11 .eg11-thumb{position:relative;display:block;width:100%;aspect-ratio:4/3;overflow:hidden;border:2px solid transparent;border-radius:13px;background:#f3f3f1;padding:0;cursor:pointer}
+.eg-v11 .eg11-thumb{position:relative;display:block;text-decoration:none;width:100%;aspect-ratio:4/3;overflow:hidden;border:2px solid transparent;border-radius:13px;background:#f3f3f1;padding:0;cursor:pointer}
 .eg-v11 .eg11-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
 .eg-v11 .eg11-thumb.is-active{border-color:var(--eg11-red)}
 
@@ -841,9 +841,9 @@ $eg_wa_href = $eg_wa_phone !== ''
         <?php if ($thumb || $eg_gallery_images) { ?>
         <div class="eg11-thumbs" aria-label="Ürün görsel galerisi">
           <?php if ($thumb) { ?>
-            <button type="button" class="eg11-thumb is-active" data-src="<?php echo $thumb; ?>" data-popup="<?php echo $popup; ?>">
+            <a class="eg11-thumb is-active" href="<?php echo $popup ? $popup : $thumb; ?>" data-src="<?php echo $thumb; ?>" data-popup="<?php echo $popup; ?>">
               <img src="<?php echo $thumb; ?>" alt="<?php echo htmlspecialchars(strip_tags($heading_title), ENT_QUOTES, 'UTF-8'); ?> – dış görünüm, Egeser Prefabrik" loading="lazy">
-            </button>
+            </a>
           <?php } ?>
           <?php
           /* Kat planı küçük resimlerinin alt metni "görsel N" yerine plan adını taşır (görsel aramada "ev planı" sorguları). */
@@ -851,9 +851,13 @@ $eg_wa_href = $eg_wa_phone !== ''
           foreach ($eg_floor_plans as $eg_fp) { if (!empty($eg_fp['thumb'])) { $eg_plan_labels_by_thumb[$eg_fp['thumb']] = $eg_fp['eg_plan_label']; } }
           ?>
           <?php $eg_img_no = 1; foreach ($eg_gallery_images as $eg_img) { $eg_img_no++; $eg_thumb_label = isset($eg_plan_labels_by_thumb[$eg_img['thumb']]) ? $eg_plan_labels_by_thumb[$eg_img['thumb']] : 'görsel ' . $eg_img_no; ?>
-            <button type="button" class="eg11-thumb" data-src="<?php echo $eg_img['thumb']; ?>" data-popup="<?php echo isset($eg_plan_orig_by_popup[$eg_img['popup']]) ? $eg_plan_orig_by_popup[$eg_img['popup']] : $eg_img['popup']; ?>">
+            <?php
+            $eg_thumb_big = isset($eg_plan_orig_by_popup[$eg_img['popup']]) ? $eg_plan_orig_by_popup[$eg_img['popup']] : $eg_img['popup'];
+            $eg_thumb_main = isset($eg_plan_orig_by_popup[$eg_img['popup']]) ? $eg_plan_orig_by_popup[$eg_img['popup']] : (!empty($eg_img['main']) ? $eg_img['main'] : $eg_img['thumb']);
+            ?>
+            <a class="eg11-thumb" href="<?php echo $eg_thumb_big ? $eg_thumb_big : $eg_img['thumb']; ?>" data-src="<?php echo $eg_thumb_main; ?>" data-popup="<?php echo $eg_thumb_big; ?>">
               <img src="<?php echo $eg_img['thumb']; ?>" alt="<?php echo htmlspecialchars(strip_tags($heading_title) . ' – ' . $eg_thumb_label . ', Egeser Prefabrik', ENT_QUOTES, 'UTF-8'); ?>" loading="lazy">
-            </button>
+            </a>
           <?php } ?>
         </div>
         <?php } ?>
@@ -1301,7 +1305,8 @@ foreach ($breadcrumbs as $eg_bc) {
     if (img.complete && !img.naturalWidth) removeBrokenThumb();
   });
   qa('.eg11-thumb').forEach(function(btn){
-    btn.addEventListener('click', function(){
+    btn.addEventListener('click', function(e){
+      if (e && e.preventDefault) e.preventDefault();
       qa('.eg11-thumb').forEach(function(b){ b.classList.remove('is-active'); });
       btn.classList.add('is-active');
       if (mainImg) {
