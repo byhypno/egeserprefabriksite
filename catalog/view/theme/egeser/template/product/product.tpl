@@ -207,7 +207,8 @@ if (!empty($eg_gallery_images)) {
             strpos($eg_probe, 'katplani') !== false ||
             strpos($eg_probe, 'floor-plan') !== false ||
             strpos($eg_probe, 'floorplan') !== false ||
-            strpos($eg_probe, '/plan') !== false
+            strpos($eg_probe, '/plan') !== false ||
+            preg_match('#-plan(?:-\d+)?(?:-\d+x\d+)?\.(?:jpe?g|png|webp)#', $eg_probe)
         ) {
             $eg_plan_label = 'Kat Planı';
         }
@@ -848,7 +849,7 @@ $eg_wa_href = $eg_wa_phone !== ''
       </div>
 
       <aside class="eg11-summary">
-        <span class="eg11-kicker">PREFABRİK EV MODELİ</span>
+        <span class="eg11-kicker"><?php echo $eg_product_eyebrow; ?></span>
         <h1 id="eg11-title"><?php echo $heading_title; ?></h1>
         <p class="eg11-summary__intro"><?php echo htmlspecialchars($eg_short_desc, ENT_QUOTES, 'UTF-8'); ?></p>
 
@@ -957,8 +958,13 @@ $eg_wa_href = $eg_wa_phone !== ''
             <div class="eg11-plan-placeholder">
               <div>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v16H4zM4 11h7V4M11 20v-5h9M11 11h9"></path></svg>
-                <strong>Kat planı görseli hazırlanıyor</strong>
-                <span>Plan bilgileri model özellikleriyle birlikte aşağıda yer alır.</span>
+                <?php if ($eg_is_corporate) { ?>
+                <strong>Yerleşim planı projenize göre hazırlanır</strong>
+                <span>Kullanıcı sayısı, bölüm ihtiyacı ve saha ölçüleri teklif aşamasında birlikte değerlendirilir.</span>
+                <?php } else { ?>
+                <strong>Kat planı için bizimle iletişime geçin</strong>
+                <span>Bu modelin plan bilgileri model özellikleriyle birlikte aşağıda yer alır.</span>
+                <?php } ?>
               </div>
             </div>
           <?php } ?>
