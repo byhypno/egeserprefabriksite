@@ -220,6 +220,16 @@ if (!empty($eg_gallery_images)) {
     }
 }
 
+/* Kat planları büyütülmeden, aslının çözünürlüğüyle gösterilir:
+   image/cache/...-1600x1200.jpg yerine image/... asıl dosya. */
+$eg_plan_orig_by_popup = array();
+foreach ($eg_floor_plans as $eg_fp_k => $eg_fp_v) {
+    $eg_fp_src = !empty($eg_fp_v['popup']) ? $eg_fp_v['popup'] : (isset($eg_fp_v['thumb']) ? $eg_fp_v['thumb'] : '');
+    $eg_fp_orig = preg_replace('#/image/cache/(.+)-\d+x\d+(\.(?:jpe?g|png|webp|gif))$#i', '/image/$1$2', $eg_fp_src);
+    $eg_floor_plans[$eg_fp_k]['orig'] = $eg_fp_orig;
+    if (!empty($eg_fp_v['popup'])) { $eg_plan_orig_by_popup[$eg_fp_v['popup']] = $eg_fp_orig; }
+}
+
 /* Eski değişkeni de koruyoruz; V1'in diğer alanları etkilenmesin. */
 if (!empty($eg_floor_plans)) {
     $eg_plan_image = $eg_floor_plans[0];
@@ -490,7 +500,8 @@ $eg_wa_href = $eg_wa_phone !== ''
 .eg-v11 .eg11-floorplan-item{margin:0;padding:14px;border:1px solid var(--eg11-line);border-radius:20px;background:#fff;overflow:hidden}
 .eg-v11 .eg11-floorplan-caption{margin:0 0 10px;color:var(--eg11-ink);font-size:13px;font-weight:900;letter-spacing:.02em}
 .eg-v11 .eg11-floorplan-item a{display:block}
-.eg-v11 .eg11-floorplan-item img{display:block;width:100%;height:auto;min-height:0;max-height:620px;object-fit:contain;border-radius:12px;background:#fff}
+.eg-v11 .eg11-floorplan-item img{display:block;width:auto;max-width:100%;margin:0 auto;height:auto;min-height:0;max-height:620px;object-fit:contain;border-radius:12px;background:#fff}
+.eg-v11 .eg11-floorplan-item a.eg11-plan-zoom{cursor:zoom-in}
 /* Birden fazla kat planı: planlar üstte yan yana ve büyük, model özeti
    altında tam genişlikte gösterilir (ikisi aynı sütunu paylaşmaz). */
 .eg-v11 .eg11-plan--multi{grid-template-columns:1fr;gap:24px}
@@ -840,7 +851,7 @@ $eg_wa_href = $eg_wa_phone !== ''
           foreach ($eg_floor_plans as $eg_fp) { if (!empty($eg_fp['thumb'])) { $eg_plan_labels_by_thumb[$eg_fp['thumb']] = $eg_fp['eg_plan_label']; } }
           ?>
           <?php $eg_img_no = 1; foreach ($eg_gallery_images as $eg_img) { $eg_img_no++; $eg_thumb_label = isset($eg_plan_labels_by_thumb[$eg_img['thumb']]) ? $eg_plan_labels_by_thumb[$eg_img['thumb']] : 'görsel ' . $eg_img_no; ?>
-            <button type="button" class="eg11-thumb" data-src="<?php echo $eg_img['thumb']; ?>" data-popup="<?php echo $eg_img['popup']; ?>">
+            <button type="button" class="eg11-thumb" data-src="<?php echo $eg_img['thumb']; ?>" data-popup="<?php echo isset($eg_plan_orig_by_popup[$eg_img['popup']]) ? $eg_plan_orig_by_popup[$eg_img['popup']] : $eg_img['popup']; ?>">
               <img src="<?php echo $eg_img['thumb']; ?>" alt="<?php echo htmlspecialchars(strip_tags($heading_title) . ' – ' . $eg_thumb_label . ', Egeser Prefabrik', ENT_QUOTES, 'UTF-8'); ?>" loading="lazy">
             </button>
           <?php } ?>
@@ -942,15 +953,15 @@ $eg_wa_href = $eg_wa_phone !== ''
                   <?php if (!empty($eg_floor_plan['eg_plan_label'])) { ?>
                     <figcaption class="eg11-floorplan-caption"><?php echo htmlspecialchars($eg_floor_plan['eg_plan_label'], ENT_QUOTES, 'UTF-8'); ?></figcaption>
                   <?php } ?>
-                  <?php if (!empty($eg_floor_plan['popup'])) { ?>
-                    <a href="<?php echo $eg_floor_plan['popup']; ?>" title="<?php echo htmlspecialchars($eg_floor_plan['eg_plan_label'], ENT_QUOTES, 'UTF-8'); ?>">
+                  <?php if (!empty($eg_floor_plan['orig'])) { ?>
+                    <a class="eg11-plan-zoom" href="<?php echo $eg_floor_plan['orig']; ?>" title="<?php echo htmlspecialchars($eg_floor_plan['eg_plan_label'], ENT_QUOTES, 'UTF-8'); ?>">
                   <?php } ?>
                       <img
-                        src="<?php echo !empty($eg_floor_plan['popup']) ? $eg_floor_plan['popup'] : $eg_floor_plan['thumb']; ?>"
+                        src="<?php echo !empty($eg_floor_plan['orig']) ? $eg_floor_plan['orig'] : $eg_floor_plan['thumb']; ?>"
                         alt="<?php echo htmlspecialchars(strip_tags($heading_title) . ' - ' . $eg_floor_plan['eg_plan_label'], ENT_QUOTES, 'UTF-8'); ?>"
                         loading="lazy"
                         decoding="async">
-                  <?php if (!empty($eg_floor_plan['popup'])) { ?></a><?php } ?>
+                  <?php if (!empty($eg_floor_plan['orig'])) { ?></a><?php } ?>
                 </figure>
               <?php } ?>
             </div>
@@ -1316,6 +1327,17 @@ foreach ($breadcrumbs as $eg_bc) {
     lightbox.setAttribute('aria-hidden','true');
     document.documentElement.style.overflow='';
   }
+  qa('.eg11-plan-zoom').forEach(function(a){
+    a.addEventListener('click', function(e){
+      if (!lightbox || !lightboxImg) return;
+      e.preventDefault();
+      lightboxImg.src = a.getAttribute('href');
+      lightboxImg.alt = a.getAttribute('title') || '';
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden','false');
+      document.documentElement.style.overflow='hidden';
+    });
+  });
   var zoom = q('#eg11-zoom');
   if (zoom) zoom.addEventListener('click', openLightbox);
   if (mainImg) mainImg.addEventListener('dblclick', openLightbox);
